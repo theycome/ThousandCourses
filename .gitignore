@@ -4,6 +4,7 @@
 *.jpeg
 *.jar
 *.iml
+*.ttf
 .gradle
 /local.properties
 /.idea/misc.xml
