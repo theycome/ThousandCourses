@@ -1,5 +1,6 @@
 package org.theycome.thousandcourses.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,18 +9,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.R
 import org.theycome.thousandcourses.ui.components.InputTextField
+import org.theycome.thousandcourses.ui.theme.SpecialColors
 import org.theycome.thousandcourses.ui.theme.ThemeColors
 
 /**
@@ -139,6 +148,52 @@ private fun Actions(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SocialMedia(modifier: Modifier = Modifier) {
+    val okGradientBrush =
+        Brush.verticalGradient(
+            colors = listOf(SpecialColors.OK1, SpecialColors.OK2),
+        )
+
     Row(modifier = modifier) {
+        Button(
+            onClick = {},
+            modifier =
+                Modifier
+                    .weight(0.5f),
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = SpecialColors.VK,
+                ),
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.vk),
+                contentDescription = null,
+                modifier =
+                    Modifier
+                        .width(50.dp)
+                        .height(40.dp),
+            )
+        }
+        Spacer(Modifier.width(16.dp))
+        Button(
+            onClick = {},
+            modifier =
+                Modifier
+                    .weight(0.5f)
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(okGradientBrush),
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                ),
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ok),
+                contentDescription = null,
+                modifier =
+                    Modifier
+                        .width(50.dp)
+                        .height(40.dp),
+            )
+        }
     }
 }
