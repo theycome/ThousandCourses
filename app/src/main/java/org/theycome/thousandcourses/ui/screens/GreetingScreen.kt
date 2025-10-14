@@ -2,19 +2,25 @@ package org.theycome.thousandcourses.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.R
 import org.theycome.thousandcourses.ui.components.InputTextField
+import org.theycome.thousandcourses.ui.theme.ThemeColors
 
 /**
  * Created by Ivan Yakushev on 13.10.2025
@@ -24,25 +30,42 @@ fun GreetingScreen(modifier: Modifier = Modifier) {
     val standardPadding = dimensionResource(R.dimen.standard_padding)
 
     Column {
-        Title(standardPadding)
-        Inputs(standardPadding)
-//        Button({}) {
-//            Text(
-//                text = "Вход",
-//            )
-//        }
-//        HorizontalDivider(Modifier.height(10.dp))
+        Title(
+            Modifier
+                .padding(top = 140.dp, start = standardPadding, end = standardPadding)
+                .height(36.dp),
+        )
+        Inputs(
+            Modifier
+                .padding(top = 28.dp, start = standardPadding, end = standardPadding),
+        )
+        EnterButton(
+            Modifier
+                .padding(top = 24.dp, start = standardPadding, end = standardPadding)
+                .height(50.dp)
+                .fillMaxWidth(),
+        )
+        Actions(
+            Modifier
+                .padding(top = standardPadding)
+                .fillMaxWidth(),
+        )
+        HorizontalDivider(
+            Modifier
+                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
+                .height(10.dp),
+        )
+        SocialMedia(
+            Modifier
+                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
+                .fillMaxWidth(),
+        )
     }
 }
 
 @Composable
-private fun Title(standardPadding: Dp) {
-    Box(
-        modifier =
-            Modifier
-                .padding(top = 140.dp, start = standardPadding, end = standardPadding)
-                .height(36.dp),
-    ) {
+private fun Title(modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
         Text(
             text = stringResource(R.string.enter_caption),
             style = MaterialTheme.typography.headlineLarge,
@@ -51,12 +74,8 @@ private fun Title(standardPadding: Dp) {
 }
 
 @Composable
-private fun Inputs(standardPadding: Dp) {
-    Column(
-        modifier =
-            Modifier
-                .padding(top = 28.dp, start = standardPadding, end = standardPadding),
-    ) {
+private fun Inputs(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         Text(
             text = stringResource(R.string.email_caption),
             style = MaterialTheme.typography.titleMedium,
@@ -82,5 +101,44 @@ private fun Inputs(standardPadding: Dp) {
                     .fillMaxWidth(),
             placeholderId = R.string.password_placeholder,
         )
+    }
+}
+
+@Composable
+private fun EnterButton(modifier: Modifier = Modifier) {
+    Button(
+        onClick = {},
+        modifier = modifier,
+    ) {
+        Text(
+            text = stringResource(R.string.enter_caption),
+        )
+    }
+}
+
+@Composable
+private fun Actions(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Row {
+            Text(stringResource(R.string.noaccount_caption))
+            Spacer(Modifier.width(4.dp))
+            Text(
+                text = stringResource(R.string.registration_caption),
+                color = ThemeColors.Green,
+            )
+        }
+        Text(
+            text = stringResource(R.string.forgotpass_caption),
+            color = ThemeColors.Green,
+        )
+    }
+}
+
+@Composable
+private fun SocialMedia(modifier: Modifier = Modifier) {
+    Row(modifier = modifier) {
     }
 }

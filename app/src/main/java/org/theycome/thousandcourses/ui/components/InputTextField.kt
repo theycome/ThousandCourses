@@ -34,6 +34,7 @@ fun InputTextField(
     TextField(
         value = inputText,
         modifier = modifier,
+        textStyle = MaterialTheme.typography.bodyMedium,
         onValueChange = { inputText = it },
         placeholder = {
             Text(stringResource(placeholderId))
