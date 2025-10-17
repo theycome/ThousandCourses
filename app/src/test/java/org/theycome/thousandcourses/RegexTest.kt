@@ -9,7 +9,7 @@ import io.kotlintest.matchers.shouldBe
 class RegexTest :
     DescribeSpec({
         describe("regex") {
-            val emailRegex = "\\w+@\\w+.\\w+".toRegex()
+            val emailRegex = "\\w+@\\w+[.]{1}\\w+".toRegex()
 
             describe("valid") {
                 it("valid") {
@@ -29,6 +29,7 @@ class RegexTest :
                 }
                 it("no .") {
                     emailRegex.matches("@fffru") shouldBe false
+                    emailRegex.matches("dd@fff") shouldBe false
                 }
                 it("multiple .") {
                     emailRegex.matches("@f.ff.ru") shouldBe false
