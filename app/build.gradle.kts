@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.spotless)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.kotest)
 }
 
 spotless {
@@ -64,6 +65,11 @@ android {
     buildFeatures {
         compose = true
     }
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -111,4 +117,11 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.chucker)
+
+    // kotest
+    testImplementation(libs.kotlintest)
+    testImplementation(libs.kotest.runner)
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.kotest.framework.engine)
+    testImplementation(libs.kotest.property)
 }

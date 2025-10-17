@@ -16,6 +16,8 @@ retrofit = "3.0.0"
 okhttpBom = "5.1.0"
 arrow = "2.1.2"
 chucker = "4.2.0"
+kotlintest = "2.0.0"
+kotest = "6.0.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,6 +48,11 @@ okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-intercept
 arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
 arrow-coroutines = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow" }
 chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
+kotlintest = { group = "io.kotlintest", name = "kotlintest" , version.ref = "kotlintest"}
+kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5" , version.ref = "kotest"}
+kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core" , version.ref = "kotest"}
+kotest-property = { group = "io.kotest", name = "kotest-property" , version.ref = "kotest"}
+kotest-framework-engine = { group = "io.kotest", name = "kotest-framework-engine" , version.ref = "kotest"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -54,4 +61,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
+kotest = { id = "io.kotest", version.ref = "kotest" }
 
