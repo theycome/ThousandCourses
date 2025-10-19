@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.R
 import org.theycome.thousandcourses.ui.components.InputTextField
 import org.theycome.thousandcourses.ui.components.validators.EmailValidator
+import org.theycome.thousandcourses.ui.components.validators.NotEmptyTextValidator
 import org.theycome.thousandcourses.ui.theme.SpecialColors
 import org.theycome.thousandcourses.ui.theme.ThemeColors
 import org.theycome.thousandcourses.ui.theme.ThousandCoursesTheme
@@ -55,7 +56,6 @@ fun GreetingScreen(modifier: Modifier = Modifier) {
         Inputs(
             onInput = { payload ->
                 enterButtonEnabled = payload != null
-                payload?.let(::println)
             },
             modifier =
                 Modifier
@@ -118,6 +118,7 @@ private fun Inputs(
     var email: String? by remember { mutableStateOf(null) }
     var password: String? by remember { mutableStateOf(null) }
     val emailValidator by remember { mutableStateOf(EmailValidator()) }
+    val notEmptyTextValidator by remember { mutableStateOf(NotEmptyTextValidator()) }
 
     fun callUpstream() {
         val emailCapture = email
@@ -164,6 +165,8 @@ private fun Inputs(
                 Modifier
                     .padding(top = 8.dp)
                     .fillMaxWidth(),
+            validator = notEmptyTextValidator,
+            visualTransformation = notEmptyTextValidator,
         )
     }
 }
