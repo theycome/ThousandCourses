@@ -17,6 +17,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,11 +29,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.R
 import org.theycome.thousandcourses.ui.components.InputTextField
 import org.theycome.thousandcourses.ui.theme.SpecialColors
 import org.theycome.thousandcourses.ui.theme.ThemeColors
+import org.theycome.thousandcourses.ui.theme.ThousandCoursesTheme
 
 /**
  * Created by Ivan Yakushev on 13.10.2025
@@ -37,22 +43,29 @@ import org.theycome.thousandcourses.ui.theme.ThemeColors
 @Composable
 fun GreetingScreen(modifier: Modifier = Modifier) {
     val standardPadding = dimensionResource(R.dimen.standard_padding)
+    var enterButtonEnabled by remember { mutableStateOf(false) }
 
-    Column {
+    Column(modifier = modifier) {
         Title(
             Modifier
                 .padding(top = 140.dp, start = standardPadding, end = standardPadding)
                 .height(36.dp),
         )
         Inputs(
-            Modifier
-                .padding(top = 28.dp, start = standardPadding, end = standardPadding),
+            onInput = { payload ->
+                enterButtonEnabled = payload != null
+            },
+            modifier =
+                Modifier
+                    .padding(top = 28.dp, start = standardPadding, end = standardPadding),
         )
         EnterButton(
-            Modifier
-                .padding(top = 24.dp, start = standardPadding, end = standardPadding)
-                .height(50.dp)
-                .fillMaxWidth(),
+            enabled = enterButtonEnabled,
+            modifier =
+                Modifier
+                    .padding(top = 24.dp, start = standardPadding, end = standardPadding)
+                    .height(50.dp)
+                    .fillMaxWidth(),
         )
         Actions(
             Modifier
@@ -73,6 +86,14 @@ fun GreetingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
+@Preview
+fun GreetingScreenPreview() {
+    ThousandCoursesTheme {
+        GreetingScreen()
+    }
+}
+
+@Composable
 private fun Title(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Text(
@@ -82,8 +103,29 @@ private fun Title(modifier: Modifier = Modifier) {
     }
 }
 
+private data class InputsPayload(
+    val email: String,
+    val password: String,
+)
+
 @Composable
-private fun Inputs(modifier: Modifier = Modifier) {
+private fun Inputs(
+    onInput: (InputsPayload?) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var email: String? by remember { mutableStateOf(null) }
+    var password: String? by remember { mutableStateOf(null) }
+
+    fun onInput() {
+        val emailCapture = email
+        val passwordCapture = password
+        if (emailCapture != null && passwordCapture != null) {
+            onInput(InputsPayload(emailCapture, passwordCapture))
+        } else {
+            onInput(null)
+        }
+    }
+
     Column(modifier = modifier) {
         Text(
             text = stringResource(R.string.email_caption),
@@ -91,11 +133,15 @@ private fun Inputs(modifier: Modifier = Modifier) {
         )
         InputTextField(
             value = "",
+            placeholderId = R.string.email_placeholder,
+            onInput = {
+                email = it
+                onInput()
+            },
             modifier =
                 Modifier
                     .padding(top = 8.dp)
                     .fillMaxWidth(),
-            placeholderId = R.string.email_placeholder,
         )
         Text(
             text = stringResource(R.string.password_caption),
@@ -104,20 +150,28 @@ private fun Inputs(modifier: Modifier = Modifier) {
         )
         InputTextField(
             value = "",
+            placeholderId = R.string.password_placeholder,
+            onInput = {
+                password = it
+                onInput()
+            },
             modifier =
                 Modifier
                     .padding(top = 8.dp)
                     .fillMaxWidth(),
-            placeholderId = R.string.password_placeholder,
         )
     }
 }
 
 @Composable
-private fun EnterButton(modifier: Modifier = Modifier) {
+private fun EnterButton(
+    enabled: Boolean,
+    modifier: Modifier = Modifier,
+) {
     Button(
         onClick = {},
         modifier = modifier,
+        enabled = enabled,
     ) {
         Text(
             text = stringResource(R.string.enter_caption),

@@ -19,7 +19,9 @@ class MainActivity : ComponentActivity() {
             ThousandCoursesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     GreetingScreen(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier =
+                            Modifier
+                                .padding(innerPadding),
                     )
                 }
             }
