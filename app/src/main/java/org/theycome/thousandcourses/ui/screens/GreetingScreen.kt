@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.R
 import org.theycome.thousandcourses.ui.components.InputTextField
+import org.theycome.thousandcourses.ui.components.validators.EmailValidator
 import org.theycome.thousandcourses.ui.theme.SpecialColors
 import org.theycome.thousandcourses.ui.theme.ThemeColors
 import org.theycome.thousandcourses.ui.theme.ThousandCoursesTheme
@@ -54,6 +55,7 @@ fun GreetingScreen(modifier: Modifier = Modifier) {
         Inputs(
             onInput = { payload ->
                 enterButtonEnabled = payload != null
+                payload?.let(::println)
             },
             modifier =
                 Modifier
@@ -115,8 +117,9 @@ private fun Inputs(
 ) {
     var email: String? by remember { mutableStateOf(null) }
     var password: String? by remember { mutableStateOf(null) }
+    val emailValidator by remember { mutableStateOf(EmailValidator()) }
 
-    fun onInput() {
+    fun callUpstream() {
         val emailCapture = email
         val passwordCapture = password
         if (emailCapture != null && passwordCapture != null) {
@@ -136,12 +139,14 @@ private fun Inputs(
             placeholderId = R.string.email_placeholder,
             onInput = {
                 email = it
-                onInput()
+                callUpstream()
             },
             modifier =
                 Modifier
                     .padding(top = 8.dp)
                     .fillMaxWidth(),
+            validator = emailValidator,
+            visualTransformation = emailValidator,
         )
         Text(
             text = stringResource(R.string.password_caption),
@@ -153,7 +158,7 @@ private fun Inputs(
             placeholderId = R.string.password_placeholder,
             onInput = {
                 password = it
-                onInput()
+                callUpstream()
             },
             modifier =
                 Modifier

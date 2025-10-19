@@ -14,14 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import arrow.core.raise.either
 import org.theycome.thousandcourses.R
+import org.theycome.thousandcourses.ui.components.validators.TextValidator
 import org.theycome.thousandcourses.ui.theme.ThousandCoursesTheme
 
 /**
@@ -33,11 +32,13 @@ fun InputTextField(
     @StringRes placeholderId: Int,
     onInput: (String?) -> Unit,
     modifier: Modifier = Modifier,
+    validator: TextValidator? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    showError: Boolean = false,
 ) {
-    // TODO - add showError flag
-    var isEmailValid by remember { mutableStateOf(false) }
-    val mask = EmailMask()
-    val emailRegex = "\\w+@\\w+[.]{1}\\w+".toRegex()
+    var isValid by remember {
+        mutableStateOf(validator?.let { false } ?: true)
+    }
     var inputText by remember { mutableStateOf(TextFieldValue(value)) }
 
     TextField(
@@ -46,13 +47,22 @@ fun InputTextField(
         textStyle = MaterialTheme.typography.bodyMedium,
         onValueChange = {
             inputText = it
-            val transformedText = mask.transform(it.text)
-            if (emailRegex.matches(transformedText)) {
-                onInput(transformedText)
-                isEmailValid = true
-            } else {
-                onInput(null)
-                isEmailValid = false
+            when {
+                validator != null -> {
+                    either {
+                        validator.transformAndThenValidate(it.text)
+                    }.onRight { result ->
+                        onInput(result)
+                        isValid = true
+                    }.onLeft {
+                        onInput(null)
+                        isValid = false
+                    }
+                }
+                else -> {
+                    onInput(it.text)
+                    isValid = true
+                }
             }
         },
         placeholder = {
@@ -67,8 +77,9 @@ fun InputTextField(
                 unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
             ),
         maxLines = 1,
-        isError = !isEmailValid, // starndard error underline decoration contradicts figma design
-        visualTransformation = mask,
+        // standard error underline decoration contradicts figma design
+        isError = if (showError) !isValid else false,
+        visualTransformation = visualTransformation,
     )
 }
 
@@ -81,55 +92,5 @@ fun InputTextFieldPreview() {
             placeholderId = R.string.enter_caption,
             onInput = {},
         )
-    }
-}
-
-private class EmailMask : VisualTransformation {
-    private val Char.isAllowed
-        get() =
-            this in 'a'..'z' ||
-                this in 'A'..'Z' ||
-                this in '0'..'9' ||
-                this == '@' ||
-                this == '.'
-
-    override fun filter(text: AnnotatedString): TransformedText =
-        text.text.let {
-            val transformed = transform(it)
-            TransformedText(AnnotatedString(transformed), Mapping(it))
-        }
-
-    fun transform(text: String) =
-        text.filter {
-            it.isAllowed
-        }
-
-    private inner class Mapping(
-        val original: String,
-    ) : OffsetMapping {
-        override fun originalToTransformed(offset: Int): Int {
-            val countNotAllowed =
-                original
-                    .substring(0 until offset)
-                    .count { !it.isAllowed }
-            return offset - countNotAllowed
-        }
-
-        override fun transformedToOriginal(offset: Int): Int {
-            val transformed = transform(original)
-            var skipCount = 0
-            var i = 0
-            var j = 0
-            while (i in 0 until offset) {
-                while (!transformed[j].isAllowed) {
-                    j++
-                    skipCount++
-                }
-                i++
-                j++
-            }
-
-            return offset + skipCount
-        }
     }
 }
