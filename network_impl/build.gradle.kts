@@ -1,6 +1,35 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.kotest)
+}
+
+spotless {
+    kotlin {
+        ktlint("1.6.0")
+        target("**/*.kt", "**/*.kts")
+    }
+}
+
+allprojects {
+    afterEvaluate {
+        tasks.named("preBuild") {
+            dependsOn("spotlessApply")
+        }
+    }
+}
+
+kotlin {
+    jvmToolchain(11)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }
 
 android {
@@ -29,8 +58,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
     }
 }
 
@@ -41,4 +72,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // dagger hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }
