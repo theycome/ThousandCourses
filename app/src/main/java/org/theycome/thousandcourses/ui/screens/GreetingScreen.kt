@@ -1,5 +1,6 @@
 package org.theycome.thousandcourses.ui.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,11 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import org.theycome.thousandcourses.R
 import org.theycome.thousandcourses.ui.components.InputTextField
 import org.theycome.thousandcourses.ui.components.validators.EmailValidator
@@ -214,10 +217,15 @@ private fun SocialMedia(modifier: Modifier = Modifier) {
         Brush.verticalGradient(
             colors = listOf(SpecialColors.OK1, SpecialColors.OK2),
         )
+    val context = LocalContext.current
 
     Row(modifier = modifier) {
         Button(
-            onClick = {},
+            onClick = {
+                context.startActivity(
+                    Intent(Intent.ACTION_VIEW, "https://www.vk.com".toUri()),
+                )
+            },
             modifier =
                 Modifier
                     .weight(0.5f),
@@ -237,7 +245,11 @@ private fun SocialMedia(modifier: Modifier = Modifier) {
         }
         Spacer(Modifier.width(16.dp))
         Button(
-            onClick = {},
+            onClick = {
+                context.startActivity(
+                    Intent(Intent.ACTION_VIEW, "https://www.ok.ru".toUri()),
+                )
+            },
             modifier =
                 Modifier
                     .weight(0.5f)
