@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -21,5 +23,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "ThousandCourses"
 include(":app")
-include(":network_api")
-include(":network_impl")
+include(":network:api")
+include(":network:impl")

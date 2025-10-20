@@ -73,6 +73,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.network.api)
+
     // androidx core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
