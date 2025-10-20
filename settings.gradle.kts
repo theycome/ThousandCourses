@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "ThousandCourses"
 include(":app")
- 
+include(":network_api")
+include(":network_impl")

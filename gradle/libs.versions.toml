@@ -18,6 +18,8 @@ arrow = "2.1.2"
 chucker = "4.2.0"
 kotlintest = "2.0.0"
 kotest = "6.0.4"
+appcompat = "1.6.1"
+material = "1.10.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +55,8 @@ kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5" , version.r
 kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core" , version.ref = "kotest"}
 kotest-property = { group = "io.kotest", name = "kotest-property" , version.ref = "kotest"}
 kotest-framework-engine = { group = "io.kotest", name = "kotest-framework-engine" , version.ref = "kotest"}
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -62,4 +66,5 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
 kotest = { id = "io.kotest", version.ref = "kotest" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 
