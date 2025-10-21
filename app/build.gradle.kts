@@ -73,6 +73,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core)
     implementation(projects.network.api)
 
     // androidx core

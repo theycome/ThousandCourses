@@ -33,7 +33,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.theycome.thousandcourses.network.api"
+    namespace = "org.theycome.thousandcourses.core"
     compileSdk {
         version = release(36)
     }
@@ -66,8 +66,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.core)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
