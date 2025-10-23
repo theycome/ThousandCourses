@@ -8,11 +8,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import org.theycome.thousandcourses.core.di.DefaultDispatcher
+import org.theycome.thousandcourses.core.utils.StateFlowHolder
+import org.theycome.thousandcourses.core.utils.stateFlowHolder
 import org.theycome.thousandcourses.network.api.NetworkDatasource
 import org.theycome.thousandcourses.network.api.NetworkDatasourceLocalAnnotation
 import org.theycome.thousandcourses.ui.models.CoursesModel
-import utils.StateFlowHolder
-import utils.stateFlowHolder
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 

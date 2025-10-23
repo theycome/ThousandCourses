@@ -1,4 +1,4 @@
-package utils
+package org.theycome.thousandcourses.core.utils
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
