@@ -16,6 +16,8 @@ interface NetworkDatasource {
         object EmptyJson : LoadingError
 
         object UnableToParseJson : LoadingError
+
+        object TimedOut : LoadingError
     }
 
     context(raise: Raise<LoadingError>)

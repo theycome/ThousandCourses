@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import dagger.hilt.android.AndroidEntryPoint
 import org.theycome.thousandcourses.ui.screens.GreetingScreen
 import org.theycome.thousandcourses.ui.theme.ThousandCoursesTheme
 import kotlin.getValue
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewmodel: CoursesViewModel by viewModels()
 
@@ -30,5 +32,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        viewmodel.loadCourses()
     }
 }

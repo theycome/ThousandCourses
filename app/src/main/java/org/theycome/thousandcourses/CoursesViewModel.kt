@@ -10,6 +10,9 @@ import kotlinx.coroutines.withTimeoutOrNull
 import org.theycome.thousandcourses.core.di.DefaultDispatcher
 import org.theycome.thousandcourses.network.api.NetworkDatasource
 import org.theycome.thousandcourses.network.api.NetworkDatasourceLocalAnnotation
+import org.theycome.thousandcourses.ui.models.CoursesModel
+import utils.StateFlowHolder
+import utils.stateFlowHolder
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
@@ -20,19 +23,25 @@ import kotlin.time.Duration.Companion.seconds
 class CoursesViewModel
     @Inject
     constructor(
-        @DefaultDispatcher
+        @param:DefaultDispatcher
         private val dispatcher: CoroutineDispatcher,
         @param:NetworkDatasourceLocalAnnotation
         private val networkDatasource: NetworkDatasource,
     ) : ViewModel() {
+        val coursesFlow: StateFlowHolder<CoursesModel> = stateFlowHolder { CoursesModel.Loading }
+        val loadingCoursesErrorFlow: StateFlowHolder<NetworkDatasource.LoadingError?> = stateFlowHolder { null }
+
         fun loadCourses() {
             viewModelScope.launch(dispatcher) {
                 withTimeoutOrNull(10.seconds) {
                     recover({
-                        networkDatasource.loadCourses()
+                        CoursesModel
+                            .Success(networkDatasource.loadCourses())
+                            .let(coursesFlow::update)
                     }) {
+                        loadingCoursesErrorFlow.update(it)
                     }
-                }
+                } ?: loadingCoursesErrorFlow.update(NetworkDatasource.LoadingError.TimedOut)
             }
         }
     }
