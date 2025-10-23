@@ -4,35 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
-import org.theycome.thousandcourses.ui.screens.GreetingScreen
-import org.theycome.thousandcourses.ui.theme.ThousandCoursesTheme
-import kotlin.getValue
+import org.theycome.thousandcourses.presentation.ui.screens.greetingsScreenContent
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewmodel: CoursesViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            ThousandCoursesTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    GreetingScreen(
-                        modifier =
-                            Modifier
-                                .padding(innerPadding),
-                    )
-                }
-            }
-        }
-
-        viewmodel.loadCourses()
+        setContent(
+            parent = null,
+            content = greetingsScreenContent,
+        )
     }
 }
