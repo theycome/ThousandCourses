@@ -73,6 +73,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // moshi
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi.kotlin.codegen)
+    implementation(libs.moshi.adapters)
+    implementation(libs.retrofit.converter.moshi)
+
     // dagger hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
