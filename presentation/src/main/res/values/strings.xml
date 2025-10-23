@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ThousandCourses</string>
+    <string name="enter_caption">Enter</string>
+    <string name="email_caption">Email</string>
+    <string name="email_placeholder">example@gmail.com</string>
+    <string name="password_caption">Password</string>
+    <string name="password_placeholder">Enter password</string>
+    <string name="noaccount_caption">No account?</string>
+    <string name="registration_caption">Registration</string>
+    <string name="forgotpass_caption">Forgot password</string>
+    <string name="search_courses_caption">Search courses...</string>
+    <string name="by_adddate_caption">By add date</string>
+    <string name="details_caption">Details</string>
+    <string name="main_screen">Main</string>
+    <string name="favorites_screen">Favorites</string>
+    <string name="account_screen">Account</string>
+</resources>

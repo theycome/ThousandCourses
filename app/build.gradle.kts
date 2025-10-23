@@ -74,6 +74,7 @@ android {
 
 dependencies {
     implementation(projects.core)
+    implementation(projects.presentation)
     implementation(projects.network.api)
     implementation(projects.network.impl)
 
