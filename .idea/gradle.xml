@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/network/api" />
             <option value="$PROJECT_DIR$/network/impl" />
+            <option value="$PROJECT_DIR$/presentation" />
           </set>
         </option>
       </GradleProjectSettings>
