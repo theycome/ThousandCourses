@@ -12,7 +12,7 @@
     <string name="search_courses_caption">Search courses...</string>
     <string name="by_adddate_caption">По дате добавления</string>
     <string name="details_caption">Подробнее</string>
-    <string name="main_screen">Главная</string>
-    <string name="favorites_screen">Избранное</string>
-    <string name="account_screen">Аккаунт</string>
+    <string name="main_tab">Главная</string>
+    <string name="favorites_tab">Избранное</string>
+    <string name="account_tab">Аккаунт</string>
 </resources>
