@@ -33,13 +33,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.rememberNavBackStack
 import org.theycome.thousandcourses.presentation.R
 import org.theycome.thousandcourses.presentation.ui.components.InputTextField
 import org.theycome.thousandcourses.presentation.ui.components.validators.EmailValidator
 import org.theycome.thousandcourses.presentation.ui.components.validators.NotEmptyTextValidator
+import org.theycome.thousandcourses.presentation.ui.navigation.CoursesRoutes
+import org.theycome.thousandcourses.presentation.ui.navigation.GreetingKey
+import org.theycome.thousandcourses.presentation.ui.navigation.NavDisplayProvider
 import org.theycome.thousandcourses.presentation.ui.theme.SpecialColors
 import org.theycome.thousandcourses.presentation.ui.theme.ThemeColors
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
@@ -48,9 +53,12 @@ import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
  * Created by Ivan Yakushev on 13.10.2025
  */
 val greetingsScreenContent: @Composable () -> Unit = {
+    val backStack = rememberNavBackStack(GreetingKey)
+
     ThousandCoursesTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            GreetingScreen(
+            NavDisplayProvider(
+                backStack = backStack,
                 modifier = Modifier.padding(innerPadding),
             )
         }
@@ -58,7 +66,10 @@ val greetingsScreenContent: @Composable () -> Unit = {
 }
 
 @Composable
-fun GreetingScreen(modifier: Modifier = Modifier) {
+fun GreetingScreen(
+    backStack: NavBackStack<NavKey>,
+    modifier: Modifier = Modifier,
+) {
     val standardPadding = dimensionResource(R.dimen.standard_padding)
     var enterButtonEnabled by remember { mutableStateOf(false) }
 
@@ -75,8 +86,10 @@ fun GreetingScreen(modifier: Modifier = Modifier) {
             modifier =
                 Modifier
                     .padding(top = 28.dp, start = standardPadding, end = standardPadding),
+            autoValues = true,
         )
         EnterButton(
+            backStack = backStack,
             enabled = enterButtonEnabled,
             modifier =
                 Modifier
@@ -103,14 +116,6 @@ fun GreetingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-@Preview
-fun GreetingScreenPreview() {
-    ThousandCoursesTheme {
-        GreetingScreen()
-    }
-}
-
-@Composable
 private fun Title(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Text(
@@ -129,6 +134,7 @@ private data class InputsPayload(
 private fun Inputs(
     onInput: (InputsPayload?) -> Unit,
     modifier: Modifier = Modifier,
+    autoValues: Boolean = false,
 ) {
     var email: String? by remember { mutableStateOf(null) }
     var password: String? by remember { mutableStateOf(null) }
@@ -151,7 +157,7 @@ private fun Inputs(
             style = MaterialTheme.typography.titleMedium,
         )
         InputTextField(
-            value = "",
+            value = if (autoValues) "name@mail.ru" else "",
             placeholderId = R.string.email_placeholder,
             onInput = {
                 email = it
@@ -170,7 +176,7 @@ private fun Inputs(
             style = MaterialTheme.typography.titleMedium,
         )
         InputTextField(
-            value = "",
+            value = if (autoValues) "password" else "",
             placeholderId = R.string.password_placeholder,
             onInput = {
                 password = it
@@ -188,11 +194,12 @@ private fun Inputs(
 
 @Composable
 private fun EnterButton(
+    backStack: NavBackStack<NavKey>,
     enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Button(
-        onClick = {},
+        onClick = { backStack.add(CoursesRoutes.MAIN.key) },
         modifier = modifier,
         enabled = enabled,
     ) {
