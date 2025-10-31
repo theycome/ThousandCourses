@@ -199,7 +199,10 @@ private fun EnterButton(
     modifier: Modifier = Modifier,
 ) {
     Button(
-        onClick = { backStack.add(CoursesRoutes.MAIN.key) },
+        onClick = {
+            backStack.add(CoursesRoutes.MAIN.key)
+            backStack.remove(GreetingKey)
+        },
         modifier = modifier,
         enabled = enabled,
     ) {
