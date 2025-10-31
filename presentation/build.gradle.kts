@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kotest)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 spotless {
