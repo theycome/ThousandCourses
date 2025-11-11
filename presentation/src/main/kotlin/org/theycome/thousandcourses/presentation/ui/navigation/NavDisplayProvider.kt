@@ -6,6 +6,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import org.theycome.thousandcourses.presentation.ui.screens.CoursesScreen
 import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreen
 
 /**
@@ -23,7 +24,13 @@ fun NavDisplayProvider(
         entryProvider =
             entryProvider {
                 entry<GreetingKey> { GreetingScreen(backStack, modifier) }
-                entry<CoursesKey> { CoursesScreenScaffold(backStack, it, modifier) }
+                entry<CoursesKey> { key ->
+                    CoursesScreen(
+                        backStack = backStack,
+                        coursesKey = key,
+                        modifier = modifier,
+                    )
+                }
             },
     )
 }

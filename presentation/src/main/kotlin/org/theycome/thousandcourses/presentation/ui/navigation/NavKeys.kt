@@ -5,16 +5,12 @@ import androidx.annotation.StringRes
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 import org.theycome.thousandcourses.presentation.R
-import org.theycome.thousandcourses.presentation.ui.screens.CoursesAccountScreen
-import org.theycome.thousandcourses.presentation.ui.screens.CoursesFavoritesScreen
-import org.theycome.thousandcourses.presentation.ui.screens.CoursesMainScreen
 
 /**
  * Created by Ivan Yakushev on 25.10.2025
@@ -22,6 +18,7 @@ import org.theycome.thousandcourses.presentation.ui.screens.CoursesMainScreen
 @Serializable
 data object GreetingKey : NavKey
 
+@Serializable
 sealed interface CoursesKeyValue {
     @get:StringRes val labelId: Int
 
@@ -44,7 +41,6 @@ sealed interface CoursesKeyValue {
 @Serializable
 data class CoursesKey(
     val value: CoursesKeyValue,
-    val content: @Composable ((Modifier) -> Unit),
 ) : NavKey
 
 @Serializable
@@ -71,12 +67,16 @@ data object CoursesAccountKey : CoursesKeyValue {
         get() = R.drawable.account
 }
 
+val mainCoursesKey = CoursesKey(CoursesMainKey)
+val favoritesCoursesKey = CoursesKey(CoursesFavoritesKey)
+val accountCoursesKey = CoursesKey(CoursesAccountKey)
+
 enum class CoursesRoutes(
     val key: CoursesKey,
 ) {
-    MAIN(CoursesKey(CoursesMainKey, { CoursesMainScreen(it) })),
-    FAVORITES(CoursesKey(CoursesFavoritesKey, { CoursesFavoritesScreen(it) })),
-    ACCOUNT(CoursesKey(CoursesAccountKey, { CoursesAccountScreen(it) })),
+    MAIN(mainCoursesKey),
+    FAVORITES(favoritesCoursesKey),
+    ACCOUNT(accountCoursesKey),
 }
 
 fun NavBackStack<NavKey>.log() = map { it }.joinToString("\n")
