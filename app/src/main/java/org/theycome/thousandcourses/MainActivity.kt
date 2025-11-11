@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
-import org.theycome.thousandcourses.presentation.ui.screens.greetingsScreenContent
+import org.theycome.thousandcourses.presentation.ui.screens.mainContent
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent(
             parent = null,
-            content = greetingsScreenContent,
+            content = mainContent,
         )
     }
 }
