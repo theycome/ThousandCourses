@@ -5,12 +5,16 @@ import androidx.annotation.StringRes
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 import org.theycome.thousandcourses.presentation.R
+import org.theycome.thousandcourses.presentation.ui.screens.CoursesAccountScreen
+import org.theycome.thousandcourses.presentation.ui.screens.CoursesFavoritesScreen
+import org.theycome.thousandcourses.presentation.ui.screens.CoursesMainScreen
 
 /**
  * Created by Ivan Yakushev on 25.10.2025
@@ -40,6 +44,7 @@ sealed interface CoursesKeyValue {
 @Serializable
 data class CoursesKey(
     val value: CoursesKeyValue,
+    val content: @Composable ((Modifier) -> Unit),
 ) : NavKey
 
 @Serializable
@@ -69,9 +74,9 @@ data object CoursesAccountKey : CoursesKeyValue {
 enum class CoursesRoutes(
     val key: CoursesKey,
 ) {
-    MAIN(CoursesKey(CoursesMainKey)),
-    FAVORITES(CoursesKey(CoursesFavoritesKey)),
-    ACCOUNT(CoursesKey(CoursesAccountKey)),
+    MAIN(CoursesKey(CoursesMainKey, { CoursesMainScreen(it) })),
+    FAVORITES(CoursesKey(CoursesFavoritesKey, { CoursesFavoritesScreen(it) })),
+    ACCOUNT(CoursesKey(CoursesAccountKey, { CoursesAccountScreen(it) })),
 }
 
 fun NavBackStack<NavKey>.log() = map { it }.joinToString("\n")

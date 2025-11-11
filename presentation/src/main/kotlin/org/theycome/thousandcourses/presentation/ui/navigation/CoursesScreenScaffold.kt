@@ -5,9 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
-import org.theycome.thousandcourses.presentation.ui.screens.CoursesAccountScreen
-import org.theycome.thousandcourses.presentation.ui.screens.CoursesFavoritesScreen
-import org.theycome.thousandcourses.presentation.ui.screens.CoursesMainScreen
 
 /**
  * Created by Ivan Yakushev on 25.10.2025
@@ -37,10 +34,6 @@ fun CoursesScreenScaffold(
             }
         },
     ) {
-        when (coursesKey.value) {
-            CoursesMainKey -> CoursesMainScreen(modifier)
-            CoursesFavoritesKey -> CoursesFavoritesScreen(modifier)
-            CoursesAccountKey -> CoursesAccountScreen(modifier)
-        }
+        coursesKey.content(modifier)
     }
 }
