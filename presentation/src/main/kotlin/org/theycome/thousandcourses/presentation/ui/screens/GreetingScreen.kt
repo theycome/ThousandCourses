@@ -66,21 +66,6 @@ fun GreetingScreenTryFullDesign(
                 .padding(top = 140.dp, start = standardPadding, end = standardPadding)
                 .height(36.dp),
         )
-
-//        InputsNoPayloadWrapper(
-//            onInput = { email: String?, password: String? ->
-//                if (email != null && password != null) {
-//                    enterButtonEnabled = true
-//                } else {
-//                    enterButtonEnabled = false
-//                }
-//            },
-//            modifier =
-//                Modifier
-//                    .padding(top = 28.dp, start = standardPadding, end = standardPadding),
-//            autoValues = true,
-//        )
-
         Inputs(
             onInput = { payload ->
                 enterButtonEnabled = payload != null
@@ -89,48 +74,6 @@ fun GreetingScreenTryFullDesign(
                 Modifier
                     .padding(top = 28.dp, start = standardPadding, end = standardPadding),
             autoValues = true,
-        )
-
-        EnterButton(
-            onEnterKey = onEnterKey,
-            enabled = enterButtonEnabled,
-            modifier =
-                Modifier
-                    .padding(top = 24.dp, start = standardPadding, end = standardPadding)
-                    .height(50.dp)
-                    .fillMaxWidth(),
-        )
-        Actions(
-            Modifier
-                .padding(top = standardPadding)
-                .fillMaxWidth(),
-        )
-        HorizontalDivider(
-            Modifier
-                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
-                .height(10.dp),
-        )
-        SocialMedia(
-            Modifier
-                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
-                .fillMaxWidth(),
-        )
-    }
-}
-
-@Composable
-fun GreetingScreenNoInputsOK(
-    onEnterKey: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val standardPadding = dimensionResource(R.dimen.standard_padding)
-    var enterButtonEnabled by remember { mutableStateOf(true) }
-
-    Column(modifier = modifier) {
-        Title(
-            Modifier
-                .padding(top = 140.dp, start = standardPadding, end = standardPadding)
-                .height(36.dp),
         )
         EnterButton(
             onEnterKey = onEnterKey,
@@ -155,36 +98,6 @@ fun GreetingScreenNoInputsOK(
             Modifier
                 .padding(top = 32.dp, start = standardPadding, end = standardPadding)
                 .fillMaxWidth(),
-        )
-    }
-}
-
-@Composable
-fun GreetingScreenInputsEnter(
-    onEnterKey: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val standardPadding = dimensionResource(R.dimen.standard_padding)
-    var enterButtonEnabled by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier) {
-        Inputs(
-            onInput = { payload ->
-                enterButtonEnabled = payload != null
-            },
-            modifier =
-                Modifier
-                    .padding(top = 28.dp, start = standardPadding, end = standardPadding),
-            autoValues = true,
-        )
-        EnterButton(
-            onEnterKey = onEnterKey,
-            enabled = enterButtonEnabled,
-            modifier =
-                Modifier
-                    .padding(top = 24.dp, start = standardPadding, end = standardPadding)
-                    .height(50.dp)
-                    .fillMaxWidth(),
         )
     }
 }
@@ -249,62 +162,6 @@ fun Title(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun InputsNoPayloadWrapper(
-    onInput: (email: String?, password: String?) -> Unit,
-    modifier: Modifier = Modifier,
-    autoValues: Boolean = false,
-) {
-    var email: String? by remember { mutableStateOf(null) }
-    var password: String? by remember { mutableStateOf(null) }
-    val emailValidator by remember { mutableStateOf(EmailValidator()) }
-    val notEmptyTextValidator by remember { mutableStateOf(NotEmptyTextValidator()) }
-
-    fun callUpstream() {
-        onInput(email, password)
-    }
-
-    Column(modifier = modifier) {
-        Text(
-            text = stringResource(R.string.email_caption),
-            style = MaterialTheme.typography.titleMedium,
-        )
-        InputTextField(
-            value = if (autoValues) "name@mail.ru" else "",
-            placeholderId = R.string.email_placeholder,
-            onInput = {
-                email = it
-                callUpstream()
-            },
-            modifier =
-                Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth(),
-            validator = emailValidator,
-            visualTransformation = emailValidator,
-        )
-        Text(
-            text = stringResource(R.string.password_caption),
-            modifier = Modifier.padding(top = 16.dp),
-            style = MaterialTheme.typography.titleMedium,
-        )
-        InputTextField(
-            value = if (autoValues) "password" else "",
-            placeholderId = R.string.password_placeholder,
-            onInput = {
-                password = it
-                callUpstream()
-            },
-            modifier =
-                Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth(),
-            validator = notEmptyTextValidator,
-            visualTransformation = notEmptyTextValidator,
-        )
-    }
-}
-
 class InputsPayload(
     val email: String,
     val password: String,
@@ -312,17 +169,18 @@ class InputsPayload(
 
 /**
  * Compose code sometimes crashes with an inner error of `Missed recording an endGroup`
- * when passing values upstream from Inputs
+ * when handling passing values upstream from Inputs and transitioning from GreetingScreen
+ * to other destinations in a back stack
  *
- * Probable causes of this bug are:
+ * Probable causes of this bug could be:
  * - Heavy GreetingScreen UI structure
  * - Capturing remembered String? values to remove their nullability (use double bangs to circumvent this)
  * - Using wrapper class to pass values upstream
  *
- * Google issue tracker mentions early returns as a reason for the bug, avoiding it by placing upstream call
- * to the end of composable.
+ * Google issue tracker mentions early returns as a reason for the bug, we try to avoid it by placing upstream call
+ * at the end of the composable.
  *
- * `Still the crash despite all the efforts will happen from time to time for reasons unknown..`
+ * `Still, despite all the efforts, the crash WILL happen from time to time for reasons unknown..`
  */
 @Composable
 fun Inputs(
@@ -334,36 +192,6 @@ fun Inputs(
     var password: String? by remember { mutableStateOf(null) }
     val emailValidator by remember { mutableStateOf(EmailValidator()) }
     val notEmptyTextValidator by remember { mutableStateOf(NotEmptyTextValidator()) }
-
-    fun callUpstreamCapturesUsed() {
-        val emailCapture = email
-        val passwordCapture = password
-        if (emailCapture != null && passwordCapture != null) {
-            onInput(InputsPayload(emailCapture, passwordCapture))
-        } else {
-            onInput(null)
-        }
-    }
-
-    // nope - still crashes
-    fun callUpstreamConverter(
-        emailParam: String?,
-        passwordParam: String?,
-    ) {
-        if (emailParam != null && passwordParam != null) {
-            onInput(InputsPayload(emailParam, passwordParam))
-        } else {
-            onInput(null)
-        }
-    }
-
-    fun callUpstreamDoubleBang() {
-        if (email != null && password != null) {
-            onInput(InputsPayload(email!!, password!!))
-        } else {
-            onInput(null)
-        }
-    }
 
     /**
      * See function description
