@@ -19,6 +19,9 @@ import org.theycome.thousandcourses.presentation.R
 data object GreetingKey : NavKey
 
 @Serializable
+data object TryKey : NavKey
+
+@Serializable
 sealed interface CoursesKeyValue {
     @get:StringRes val labelId: Int
 
@@ -79,4 +82,9 @@ enum class CoursesRoutes(
     ACCOUNT(accountCoursesKey),
 }
 
-fun NavBackStack<NavKey>.log() = map { it }.joinToString("\n")
+fun NavBackStack<NavKey>.log() =
+    println(
+        "=== back stack ===\n" +
+            map { it }.joinToString("\n") +
+            "\n===\n",
+    )

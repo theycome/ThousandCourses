@@ -77,7 +77,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.navigation3.ui)
-    // implementation(libs.androidx.material3.adaptive.navigation)
     implementation(libs.material3.adaptive.navigation)
 
     // compose

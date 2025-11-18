@@ -34,14 +34,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.navigation3.runtime.NavBackStack
-import androidx.navigation3.runtime.NavKey
 import org.theycome.thousandcourses.presentation.R
 import org.theycome.thousandcourses.presentation.ui.components.InputTextField
 import org.theycome.thousandcourses.presentation.ui.components.validators.EmailValidator
 import org.theycome.thousandcourses.presentation.ui.components.validators.NotEmptyTextValidator
-import org.theycome.thousandcourses.presentation.ui.navigation.CoursesRoutes
-import org.theycome.thousandcourses.presentation.ui.navigation.GreetingKey
 import org.theycome.thousandcourses.presentation.ui.theme.SpecialColors
 import org.theycome.thousandcourses.presentation.ui.theme.ThemeColors
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
@@ -53,12 +49,12 @@ import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
 @Composable
 fun GreetingScreenPreview() =
     ThousandCoursesTheme {
-        GreetingScreen(NavBackStack())
+        GreetingScreen({})
     }
 
 @Composable
-fun GreetingScreen(
-    backStack: NavBackStack<NavKey>,
+fun GreetingScreenTryFullDesign(
+    onEnterKey: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val standardPadding = dimensionResource(R.dimen.standard_padding)
@@ -70,6 +66,21 @@ fun GreetingScreen(
                 .padding(top = 140.dp, start = standardPadding, end = standardPadding)
                 .height(36.dp),
         )
+
+//        InputsNoPayloadWrapper(
+//            onInput = { email: String?, password: String? ->
+//                if (email != null && password != null) {
+//                    enterButtonEnabled = true
+//                } else {
+//                    enterButtonEnabled = false
+//                }
+//            },
+//            modifier =
+//                Modifier
+//                    .padding(top = 28.dp, start = standardPadding, end = standardPadding),
+//            autoValues = true,
+//        )
+
         Inputs(
             onInput = { payload ->
                 enterButtonEnabled = payload != null
@@ -79,8 +90,9 @@ fun GreetingScreen(
                     .padding(top = 28.dp, start = standardPadding, end = standardPadding),
             autoValues = true,
         )
+
         EnterButton(
-            backStack = backStack,
+            onEnterKey = onEnterKey,
             enabled = enterButtonEnabled,
             modifier =
                 Modifier
@@ -107,7 +119,128 @@ fun GreetingScreen(
 }
 
 @Composable
-private fun Title(modifier: Modifier = Modifier) {
+fun GreetingScreenNoInputsOK(
+    onEnterKey: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val standardPadding = dimensionResource(R.dimen.standard_padding)
+    var enterButtonEnabled by remember { mutableStateOf(true) }
+
+    Column(modifier = modifier) {
+        Title(
+            Modifier
+                .padding(top = 140.dp, start = standardPadding, end = standardPadding)
+                .height(36.dp),
+        )
+        EnterButton(
+            onEnterKey = onEnterKey,
+            enabled = enterButtonEnabled,
+            modifier =
+                Modifier
+                    .padding(top = 24.dp, start = standardPadding, end = standardPadding)
+                    .height(50.dp)
+                    .fillMaxWidth(),
+        )
+        Actions(
+            Modifier
+                .padding(top = standardPadding)
+                .fillMaxWidth(),
+        )
+        HorizontalDivider(
+            Modifier
+                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
+                .height(10.dp),
+        )
+        SocialMedia(
+            Modifier
+                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
+                .fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+fun GreetingScreenInputsEnter(
+    onEnterKey: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val standardPadding = dimensionResource(R.dimen.standard_padding)
+    var enterButtonEnabled by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier) {
+        Inputs(
+            onInput = { payload ->
+                enterButtonEnabled = payload != null
+            },
+            modifier =
+                Modifier
+                    .padding(top = 28.dp, start = standardPadding, end = standardPadding),
+            autoValues = true,
+        )
+        EnterButton(
+            onEnterKey = onEnterKey,
+            enabled = enterButtonEnabled,
+            modifier =
+                Modifier
+                    .padding(top = 24.dp, start = standardPadding, end = standardPadding)
+                    .height(50.dp)
+                    .fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+fun GreetingScreen(
+    onEnterKey: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val standardPadding = dimensionResource(R.dimen.standard_padding)
+    var enterButtonEnabled by remember { mutableStateOf(false) }
+
+    Column(modifier = modifier) {
+        Title(
+            Modifier
+                .padding(top = 140.dp, start = standardPadding, end = standardPadding)
+                .height(36.dp),
+        )
+        Inputs(
+            onInput = { payload ->
+                enterButtonEnabled = payload != null
+            },
+            modifier =
+                Modifier
+                    .padding(top = 28.dp, start = standardPadding, end = standardPadding),
+            autoValues = true,
+        )
+        EnterButton(
+            onEnterKey = onEnterKey,
+            enabled = enterButtonEnabled,
+            modifier =
+                Modifier
+                    .padding(top = 24.dp, start = standardPadding, end = standardPadding)
+                    .height(50.dp)
+                    .fillMaxWidth(),
+        )
+        Actions(
+            Modifier
+                .padding(top = standardPadding)
+                .fillMaxWidth(),
+        )
+        HorizontalDivider(
+            Modifier
+                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
+                .height(10.dp),
+        )
+        SocialMedia(
+            Modifier
+                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
+                .fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+fun Title(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Text(
             text = stringResource(R.string.enter_caption),
@@ -116,14 +249,9 @@ private fun Title(modifier: Modifier = Modifier) {
     }
 }
 
-private data class InputsPayload(
-    val email: String,
-    val password: String,
-)
-
 @Composable
-private fun Inputs(
-    onInput: (InputsPayload?) -> Unit,
+fun InputsNoPayloadWrapper(
+    onInput: (email: String?, password: String?) -> Unit,
     modifier: Modifier = Modifier,
     autoValues: Boolean = false,
 ) {
@@ -133,13 +261,7 @@ private fun Inputs(
     val notEmptyTextValidator by remember { mutableStateOf(NotEmptyTextValidator()) }
 
     fun callUpstream() {
-        val emailCapture = email
-        val passwordCapture = password
-        if (emailCapture != null && passwordCapture != null) {
-            onInput(InputsPayload(emailCapture, passwordCapture))
-        } else {
-            onInput(null)
-        }
+        onInput(email, password)
     }
 
     Column(modifier = modifier) {
@@ -183,17 +305,127 @@ private fun Inputs(
     }
 }
 
+class InputsPayload(
+    val email: String,
+    val password: String,
+)
+
+/**
+ * Compose code sometimes crashes with an inner error of `Missed recording an endGroup`
+ * when passing values upstream from Inputs
+ *
+ * Probable causes of this bug are:
+ * - Heavy GreetingScreen UI structure
+ * - Capturing remembered String? values to remove their nullability (use double bangs to circumvent this)
+ * - Using wrapper class to pass values upstream
+ *
+ * Google issue tracker mentions early returns as a reason for the bug, avoiding it by placing upstream call
+ * to the end of composable.
+ *
+ * `Still the crash despite all the efforts will happen from time to time for reasons unknown..`
+ */
 @Composable
-private fun EnterButton(
-    backStack: NavBackStack<NavKey>,
+fun Inputs(
+    onInput: (InputsPayload?) -> Unit,
+    modifier: Modifier = Modifier,
+    autoValues: Boolean = false,
+) {
+    var email: String? by remember { mutableStateOf(null) }
+    var password: String? by remember { mutableStateOf(null) }
+    val emailValidator by remember { mutableStateOf(EmailValidator()) }
+    val notEmptyTextValidator by remember { mutableStateOf(NotEmptyTextValidator()) }
+
+    fun callUpstreamCapturesUsed() {
+        val emailCapture = email
+        val passwordCapture = password
+        if (emailCapture != null && passwordCapture != null) {
+            onInput(InputsPayload(emailCapture, passwordCapture))
+        } else {
+            onInput(null)
+        }
+    }
+
+    // nope - still crashes
+    fun callUpstreamConverter(
+        emailParam: String?,
+        passwordParam: String?,
+    ) {
+        if (emailParam != null && passwordParam != null) {
+            onInput(InputsPayload(emailParam, passwordParam))
+        } else {
+            onInput(null)
+        }
+    }
+
+    fun callUpstreamDoubleBang() {
+        if (email != null && password != null) {
+            onInput(InputsPayload(email!!, password!!))
+        } else {
+            onInput(null)
+        }
+    }
+
+    /**
+     * See function description
+     */
+    fun createPayloadUsingDoubleBangs(): InputsPayload? =
+        if (email != null && password != null) {
+            InputsPayload(email!!, password!!)
+        } else {
+            null
+        }
+
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(R.string.email_caption),
+            style = MaterialTheme.typography.titleMedium,
+        )
+        InputTextField(
+            value = if (autoValues) "name@mail.ru" else "",
+            placeholderId = R.string.email_placeholder,
+            onInput = {
+                email = it
+            },
+            modifier =
+                Modifier
+                    .padding(top = 8.dp)
+                    .fillMaxWidth(),
+            validator = emailValidator,
+            visualTransformation = emailValidator,
+        )
+        Text(
+            text = stringResource(R.string.password_caption),
+            modifier = Modifier.padding(top = 16.dp),
+            style = MaterialTheme.typography.titleMedium,
+        )
+        InputTextField(
+            value = if (autoValues) "password" else "",
+            placeholderId = R.string.password_placeholder,
+            onInput = {
+                password = it
+            },
+            modifier =
+                Modifier
+                    .padding(top = 8.dp)
+                    .fillMaxWidth(),
+            validator = notEmptyTextValidator,
+            visualTransformation = notEmptyTextValidator,
+        )
+    }
+
+    // See function description
+    val payload = createPayloadUsingDoubleBangs()
+    onInput(payload)
+}
+
+@Composable
+fun EnterButton(
+    onEnterKey: () -> Unit,
     enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Button(
-        onClick = {
-            backStack.add(CoursesRoutes.MAIN.key)
-            backStack.remove(GreetingKey) // remove log screen since we have authorized successfully
-        },
+        onClick = onEnterKey,
         modifier = modifier,
         enabled = enabled,
     ) {
@@ -204,7 +436,7 @@ private fun EnterButton(
 }
 
 @Composable
-private fun Actions(modifier: Modifier = Modifier) {
+fun Actions(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -225,7 +457,7 @@ private fun Actions(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SocialMedia(modifier: Modifier = Modifier) {
+fun SocialMedia(modifier: Modifier = Modifier) {
     val okGradientBrush =
         Brush.verticalGradient(
             colors = listOf(SpecialColors.OK1, SpecialColors.OK2),

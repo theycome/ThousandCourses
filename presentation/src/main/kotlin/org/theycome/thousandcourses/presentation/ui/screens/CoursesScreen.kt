@@ -5,14 +5,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation3.runtime.NavBackStack
-import androidx.navigation3.runtime.NavKey
 import org.theycome.thousandcourses.presentation.R
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesAccountKey
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesFavoritesKey
@@ -25,51 +22,55 @@ import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
 /**
  * Created by Ivan Yakushev on 25.10.2025
  */
+
 @Preview
 @Composable
 fun CoursesScreenPreview() =
     ThousandCoursesTheme {
         CoursesScreen(
-            backStack = NavBackStack(),
             coursesKey = mainCoursesKey,
         )
     }
 
 @Composable
 fun CoursesScreen(
-    backStack: NavBackStack<NavKey>,
     coursesKey: CoursesKey,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
-        // NavigationBar(modifier)
-    }
-
-    NavigationSuiteScaffold(
-        modifier = modifier,
-        navigationSuiteItems = {
-            CoursesRoutes.entries.forEach { route ->
-                val value = route.key.value
-                item(
-                    selected = coursesKey == route.key,
-                    onClick = {
-                        if (backStack.last() != route.key) {
-                            backStack.add(route.key)
-                        }
-                    },
-                    icon = value.iconContent,
-                    label = value.labelContent,
-                    alwaysShowLabel = false,
-                )
-            }
-        },
-    ) {
         when (coursesKey.value) {
             CoursesMainKey -> CoursesMainScreen(modifier)
             CoursesFavoritesKey -> CoursesFavoritesScreen(modifier)
             CoursesAccountKey -> CoursesAccountScreen(modifier)
         }
+        NavigationBar(modifier)
     }
+
+    //    NavigationSuiteScaffold(
+    //        modifier = modifier,
+    //        navigationSuiteItems = {
+    //            CoursesRoutes.entries.forEach { route ->
+    //                val value = route.key.value
+    //                item(
+    //                    selected = coursesKey == route.key,
+    //                    onClick = {
+    //                        if (backStack.last() != route.key) {
+    //                            backStack.add(route.key)
+    //                        }
+    //                    },
+    //                    icon = value.iconContent,
+    //                    label = value.labelContent,
+    //                    alwaysShowLabel = false,
+    //                )
+    //            }
+    //        },
+    //    ) {
+    //        when (coursesKey.value) {
+    //            CoursesMainKey -> CoursesMainScreen(modifier)
+    //            CoursesFavoritesKey -> CoursesFavoritesScreen(modifier)
+    //            CoursesAccountKey -> CoursesAccountScreen(modifier)
+    //        }
+    //    }
 }
 
 @Composable
