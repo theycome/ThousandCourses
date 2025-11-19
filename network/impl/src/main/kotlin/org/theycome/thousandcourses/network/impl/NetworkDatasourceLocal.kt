@@ -15,7 +15,6 @@ import kotlin.jvm.java
  * Created by Ivan Yakushev on 22.10.2025
  */
 class NetworkDatasourceLocal(
-    // TODO extract presentation module
     val context: Context,
     val moshi: Moshi,
 ) : NetworkDatasource {

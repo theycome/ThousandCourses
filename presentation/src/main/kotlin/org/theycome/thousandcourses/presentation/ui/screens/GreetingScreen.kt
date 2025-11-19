@@ -53,56 +53,6 @@ fun GreetingScreenPreview() =
     }
 
 @Composable
-fun GreetingScreenTryFullDesign(
-    onEnterKey: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val standardPadding = dimensionResource(R.dimen.standard_padding)
-    var enterButtonEnabled by remember { mutableStateOf(false) }
-
-    Column(modifier = modifier) {
-        Title(
-            Modifier
-                .padding(top = 140.dp, start = standardPadding, end = standardPadding)
-                .height(36.dp),
-        )
-        Inputs(
-            onInput = { payload ->
-                enterButtonEnabled = payload != null
-            },
-            modifier =
-                Modifier
-                    .padding(top = 28.dp, start = standardPadding, end = standardPadding),
-            autoValues = true,
-        )
-        EnterButton(
-            onEnterKey = onEnterKey,
-            enabled = enterButtonEnabled,
-            modifier =
-                Modifier
-                    .padding(top = 24.dp, start = standardPadding, end = standardPadding)
-                    .height(50.dp)
-                    .fillMaxWidth(),
-        )
-        Actions(
-            Modifier
-                .padding(top = standardPadding)
-                .fillMaxWidth(),
-        )
-        HorizontalDivider(
-            Modifier
-                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
-                .height(10.dp),
-        )
-        SocialMedia(
-            Modifier
-                .padding(top = 32.dp, start = standardPadding, end = standardPadding)
-                .fillMaxWidth(),
-        )
-    }
-}
-
-@Composable
 fun GreetingScreen(
     onEnterKey: () -> Unit,
     modifier: Modifier = Modifier,

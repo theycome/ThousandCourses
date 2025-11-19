@@ -16,12 +16,9 @@ import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
 import javax.inject.Inject
 
-// Hypothesis 8 - get rid of inner returning function in Inputs - nope
-// Hypothesis 9 - the culprit is capturing remembered nullable variables in local variables and
-//                then passing them upstream which causes inner Compose error - NOPE
-// Hypothesis 10 - place callUpstreamCall to the very end of Composable function - NOPE
-// Hypothesis 11 - create payload using double bang in a separate function at the end of Composable
-//                 works.. (after 20 attempts)
+// Hypothesis 12 - crash happens on rendering second screen - maybe it's something with compound navigation key
+// Hypothesis 13 - pairing CoursesKey with TryScreen - OK
+// Hypothesis 14 - use `if` instead of `when` when dispatching on CoursesKey seems not to crash (at least that often)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject

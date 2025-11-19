@@ -1,17 +1,17 @@
 package org.theycome.thousandcourses.presentation.di
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.multibindings.IntoSet
+import org.theycome.thousandcourses.presentation.ui.navigation.CoursesKey
 import org.theycome.thousandcourses.presentation.ui.navigation.EntryProviderInstaller
 import org.theycome.thousandcourses.presentation.ui.navigation.GreetingKey
 import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
-import org.theycome.thousandcourses.presentation.ui.navigation.TryKey
-import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreenTryFullDesign
+import org.theycome.thousandcourses.presentation.ui.navigation.mainCoursesKey
+import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreen
+import org.theycome.thousandcourses.presentation.ui.screens.TryScreen02
 
 /**
  * Created by Ivan Yakushev on 12.11.2025
@@ -24,18 +24,16 @@ object PresentationModule {
     fun provideEntryProviderInstaller(navigator: Navigator): EntryProviderInstaller =
         {
             entry<GreetingKey> { key ->
-                GreetingScreenTryFullDesign(
+                GreetingScreen(
                     onEnterKey = {
-                        navigator.goTo(TryKey)
+                        navigator.goTo(mainCoursesKey)
                         navigator.remove(GreetingKey)
                     },
                 )
             }
-            // TODO - add CoursesKey
-            entry<TryKey> { key ->
-                Column {
-                    Text("TryKey")
-                }
+            entry<CoursesKey> { key ->
+                // CoursesScreen(key)
+                TryScreen02(key)
             }
         }
 }
