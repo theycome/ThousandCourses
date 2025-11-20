@@ -128,12 +128,15 @@ fun Inputs(
     val emailValidator by remember { mutableStateOf(EmailValidator()) }
     val notEmptyTextValidator by remember { mutableStateOf(NotEmptyTextValidator()) }
 
-    fun createPayloadUsingDoubleBangs(): InputsPayload? =
-        if (email != null && password != null) {
-            InputsPayload(email!!, password!!)
+    fun callUpstream() {
+        val emailCapture = email
+        val passwordCapture = password
+        if (emailCapture != null && passwordCapture != null) {
+            onInput(InputsPayload(emailCapture, passwordCapture))
         } else {
-            null
+            onInput(null)
         }
+    }
 
     Column(modifier = modifier) {
         Text(
@@ -145,6 +148,7 @@ fun Inputs(
             placeholderId = R.string.email_placeholder,
             onInput = {
                 email = it
+                callUpstream()
             },
             modifier =
                 Modifier
@@ -163,6 +167,7 @@ fun Inputs(
             placeholderId = R.string.password_placeholder,
             onInput = {
                 password = it
+                callUpstream()
             },
             modifier =
                 Modifier
@@ -172,9 +177,6 @@ fun Inputs(
             visualTransformation = notEmptyTextValidator,
         )
     }
-
-    val payload = createPayloadUsingDoubleBangs()
-    onInput(payload)
 }
 
 @Composable
