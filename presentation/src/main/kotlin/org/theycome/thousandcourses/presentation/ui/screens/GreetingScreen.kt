@@ -117,21 +117,6 @@ class InputsPayload(
     val password: String,
 )
 
-/**
- * Compose code sometimes crashes with an inner error of `Missed recording an endGroup`
- * when handling passing values upstream from Inputs and transitioning from GreetingScreen
- * to other destinations in a back stack
- *
- * Probable causes of this bug could be:
- * - Heavy GreetingScreen UI structure
- * - Capturing remembered String? values to remove their nullability (use double bangs to circumvent this)
- * - Using wrapper class to pass values upstream
- *
- * Google issue tracker mentions early returns as a reason for the bug, we try to avoid it by placing upstream call
- * at the end of the composable.
- *
- * `Still, despite all the efforts, the crash WILL happen from time to time for reasons unknown..`
- */
 @Composable
 fun Inputs(
     onInput: (InputsPayload?) -> Unit,
@@ -143,9 +128,6 @@ fun Inputs(
     val emailValidator by remember { mutableStateOf(EmailValidator()) }
     val notEmptyTextValidator by remember { mutableStateOf(NotEmptyTextValidator()) }
 
-    /**
-     * See function description
-     */
     fun createPayloadUsingDoubleBangs(): InputsPayload? =
         if (email != null && password != null) {
             InputsPayload(email!!, password!!)
@@ -191,7 +173,6 @@ fun Inputs(
         )
     }
 
-    // See function description
     val payload = createPayloadUsingDoubleBangs()
     onInput(payload)
 }

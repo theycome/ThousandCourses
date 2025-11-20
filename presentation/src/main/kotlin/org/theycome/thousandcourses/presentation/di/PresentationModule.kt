@@ -10,8 +10,8 @@ import org.theycome.thousandcourses.presentation.ui.navigation.EntryProviderInst
 import org.theycome.thousandcourses.presentation.ui.navigation.GreetingKey
 import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
 import org.theycome.thousandcourses.presentation.ui.navigation.mainCoursesKey
+import org.theycome.thousandcourses.presentation.ui.screens.CoursesScreen
 import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreen
-import org.theycome.thousandcourses.presentation.ui.screens.TryScreen02
 
 /**
  * Created by Ivan Yakushev on 12.11.2025
@@ -32,8 +32,7 @@ object PresentationModule {
                 )
             }
             entry<CoursesKey> { key ->
-                // CoursesScreen(key)
-                TryScreen02(key)
+                CoursesScreen(key)
             }
         }
 }

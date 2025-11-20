@@ -16,9 +16,6 @@ import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
 import javax.inject.Inject
 
-// Hypothesis 12 - crash happens on rendering second screen - maybe it's something with compound navigation key
-// Hypothesis 13 - pairing CoursesKey with TryScreen - OK
-// Hypothesis 14 - use `if` instead of `when` when dispatching on CoursesKey seems not to crash (at least that often)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
