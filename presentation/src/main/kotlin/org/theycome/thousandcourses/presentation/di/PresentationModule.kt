@@ -3,7 +3,7 @@ package org.theycome.thousandcourses.presentation.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesKey
 import org.theycome.thousandcourses.presentation.ui.navigation.EntryProviderInstaller
@@ -17,7 +17,7 @@ import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreen
  * Created by Ivan Yakushev on 12.11.2025
  */
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(SingletonComponent::class)
 object PresentationModule {
     @IntoSet
     @Provides
