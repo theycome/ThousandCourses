@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,50 +53,6 @@ fun CoursesScreen(
     }
 }
 
-// @Composable
-// fun CoursesScreenPre(
-//    //coursesKey: CoursesKey,
-//    coursesKey: CoursesKeyValue,
-//    modifier: Modifier = Modifier,
-// ) {
-//    Column(modifier) {
-//        if (coursesKey.value is CoursesMainKey) {
-//            CoursesMainScreen(modifier)
-//        } else if (coursesKey.value is CoursesFavoritesKey) {
-//            CoursesFavoritesScreen(modifier)
-//        } else if (coursesKey.value is CoursesAccountKey) {
-//            CoursesAccountScreen(modifier)
-//        }
-//        NavigationBar(modifier)
-//    }
-//
-//    //    NavigationSuiteScaffold(
-//    //        modifier = modifier,
-//    //        navigationSuiteItems = {
-//    //            CoursesRoutes.entries.forEach { route ->
-//    //                val value = route.key.value
-//    //                item(
-//    //                    selected = coursesKey == route.key,
-//    //                    onClick = {
-//    //                        if (backStack.last() != route.key) {
-//    //                            backStack.add(route.key)
-//    //                        }
-//    //                    },
-//    //                    icon = value.iconContent,
-//    //                    label = value.labelContent,
-//    //                    alwaysShowLabel = false,
-//    //                )
-//    //            }
-//    //        },
-//    //    ) {
-//    //        when (coursesKey.value) {
-//    //            CoursesMainKey -> CoursesMainScreen(modifier)
-//    //            CoursesFavoritesKey -> CoursesFavoritesScreen(modifier)
-//    //            CoursesAccountKey -> CoursesAccountScreen(modifier)
-//    //        }
-//    //    }
-// }
-
 @Composable
 fun NavigationBar(modifier: Modifier = Modifier) {
     Row(
@@ -105,43 +60,15 @@ fun NavigationBar(modifier: Modifier = Modifier) {
             modifier
                 .height(80.dp)
                 .fillMaxWidth()
-                .background(Color.Green),
+                .background(Color.DarkGray),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        val entryModifier =
+            Modifier
+                .weight(1.0f / CoursesRoutes.entries.size)
+
         CoursesRoutes.entries.forEach { route ->
-            val entry = route.key.value
-
-            IconButton(
-                onClick = {},
-                modifier =
-                    Modifier
-                        // .requiredHeight(200.dp)
-                        .weight(1.0f / CoursesRoutes.entries.size),
-            ) {
-                entry.iconContent()
-//
-// //                Icon(
-// //                    painter = painterResource(entry.imageVectorId),
-// //                    contentDescription = stringResource(entry.labelId),
-// //                )
-//
-//                Icon(
-//                    painter = painterResource(id = R.drawable.vk),
-//                    contentDescription = null,
-//                    // modifier = Modifier.fillMaxSize(),
-//                    //                        Modifier
-//                    //                            .requiredHeight(200.dp),
-//                )
-            }
-
-//            Icon(
-//                painter = painterResource(id = R.drawable.vk),
-//                contentDescription = null,
-//                modifier =
-//                    Modifier
-//                        .width(50.dp)
-//                        .height(40.dp),
-//            )
+            route.key.value.content(entryModifier)
         }
     }
 }
