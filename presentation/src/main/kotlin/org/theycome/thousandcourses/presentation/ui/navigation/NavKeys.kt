@@ -8,7 +8,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 import org.theycome.thousandcourses.presentation.R
-import org.theycome.thousandcourses.presentation.ui.screens.coursesKeyContent
+import org.theycome.thousandcourses.presentation.ui.screens.coursesKeyBottomNavContent
 
 /**
  * Created by Ivan Yakushev on 25.10.2025
@@ -23,7 +23,7 @@ sealed interface CoursesKeyValue {
     @get:DrawableRes val imageVectorId: Int
 
     val content: @Composable CoursesKeyValue.(Modifier) -> Unit
-        get() = coursesKeyContent
+        get() = coursesKeyBottomNavContent
 }
 
 @Serializable

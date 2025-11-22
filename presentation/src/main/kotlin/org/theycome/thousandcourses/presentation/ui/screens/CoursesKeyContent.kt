@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesKeyValue
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesRoutes
-import org.theycome.thousandcourses.presentation.ui.screens.coursesKeyContent
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
 
 /**
@@ -28,19 +27,19 @@ import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
  */
 @Preview
 @Composable
-fun CoursesKeyContentPreview() {
+fun CoursesKeyBottomNavContentPreview() {
     ThousandCoursesTheme {
         with(
             CoursesRoutes.entries
                 .first()
                 .key.value,
         ) {
-            coursesKeyContent(Modifier)
+            coursesKeyBottomNavContent(Modifier)
         }
     }
 }
 
-val coursesKeyContent: @Composable CoursesKeyValue.(Modifier) -> Unit =
+val coursesKeyBottomNavContent: @Composable CoursesKeyValue.(Modifier) -> Unit =
     { modifier ->
         Column(
             modifier = modifier,
