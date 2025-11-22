@@ -3,6 +3,7 @@ package org.theycome.thousandcourses.presentation.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -53,6 +54,14 @@ fun CoursesScreen(
     }
 }
 
+@Preview
+@Composable
+fun NavigationBarPreview() {
+    ThousandCoursesTheme {
+        NavigationBar()
+    }
+}
+
 @Composable
 fun NavigationBar(modifier: Modifier = Modifier) {
     Row(
@@ -60,15 +69,18 @@ fun NavigationBar(modifier: Modifier = Modifier) {
             modifier
                 .height(80.dp)
                 .fillMaxWidth()
-                .background(Color.DarkGray),
+                .background(Color.LightGray),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         val entryModifier =
             Modifier
                 .weight(1.0f / CoursesRoutes.entries.size)
+                .fillMaxHeight()
 
         CoursesRoutes.entries.forEach { route ->
-            route.key.value.content(entryModifier)
+            with(route.key.value) {
+                content(entryModifier)
+            }
         }
     }
 }
