@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesAccountKey
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesFavoritesKey
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesKey
@@ -19,6 +20,7 @@ import org.theycome.thousandcourses.presentation.ui.navigation.CoursesMainKey
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesRoutes
 import org.theycome.thousandcourses.presentation.ui.navigation.mainCoursesKey
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
+import org.theycome.thousandcourses.presentation.viewmodels.CoursesViewModel
 
 /**
  * Created by Ivan Yakushev on 25.10.2025
@@ -32,6 +34,20 @@ fun CoursesScreenPreview() =
             coursesKey = mainCoursesKey,
         )
     }
+
+@Composable
+fun CoursesScreenStateful(
+    coursesKey: CoursesKey,
+    modifier: Modifier = Modifier,
+    viewModel: CoursesViewModel = hiltViewModel(),
+) {
+    viewModel.loadCourses()
+
+//    val kodeModel by viewmodel.kodeModelFlow.flow.collectAsStateWithLifecycle()
+//    val loadingError by viewmodel.loadingErrorFlow.flow.collectAsStateWithLifecycle()
+
+    CoursesScreen(coursesKey, modifier)
+}
 
 @Composable
 fun CoursesScreen(

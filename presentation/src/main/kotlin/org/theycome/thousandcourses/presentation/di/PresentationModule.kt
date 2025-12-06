@@ -10,8 +10,9 @@ import org.theycome.thousandcourses.presentation.ui.navigation.EntryProviderInst
 import org.theycome.thousandcourses.presentation.ui.navigation.GreetingKey
 import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
 import org.theycome.thousandcourses.presentation.ui.navigation.mainCoursesKey
-import org.theycome.thousandcourses.presentation.ui.screens.CoursesScreen
+import org.theycome.thousandcourses.presentation.ui.screens.CoursesScreenStateful
 import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreen
+import javax.inject.Singleton
 
 /**
  * Created by Ivan Yakushev on 12.11.2025
@@ -21,6 +22,7 @@ import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreen
 object PresentationModule {
     @IntoSet
     @Provides
+    @Singleton
     fun provideEntryProviderInstaller(navigator: Navigator): EntryProviderInstaller =
         {
             entry<GreetingKey> { key ->
@@ -32,7 +34,7 @@ object PresentationModule {
                 )
             }
             entry<CoursesKey> { key ->
-                CoursesScreen(key)
+                CoursesScreenStateful(key)
             }
         }
 }
