@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -14,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.theycome.thousandcourses.presentation.ui.navigation.EntryProviderInstaller
 import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
+import org.theycome.thousandcourses.presentation.viewmodels.CoursesViewModel
 import javax.inject.Inject
+import kotlin.getValue
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -23,6 +26,8 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var entryProviderScopes: Set<@JvmSuppressWildcards EntryProviderInstaller>
+
+    private val coursesViewmodel: CoursesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,5 +48,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        coursesViewmodel.loadCourses()
     }
 }

@@ -7,12 +7,16 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.theycome.thousandcourses.network.api.NetworkDatasource
+import org.theycome.thousandcourses.presentation.ui.models.CoursesModel
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesAccountKey
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesFavoritesKey
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesKey
@@ -32,6 +36,7 @@ fun CoursesScreenPreview() =
     ThousandCoursesTheme {
         CoursesScreen(
             coursesKey = mainCoursesKey,
+            model = CoursesModel.default(),
         )
     }
 
@@ -41,19 +46,35 @@ fun CoursesScreenStateful(
     modifier: Modifier = Modifier,
     viewModel: CoursesViewModel = hiltViewModel(),
 ) {
-    viewModel.loadCourses()
+    val model: CoursesModel by viewModel.coursesFlow.flow.collectAsStateWithLifecycle()
+    val loadingError: NetworkDatasource.LoadingError? by viewModel.loadingCoursesErrorFlow.flow
+        .collectAsStateWithLifecycle()
 
-//    val kodeModel by viewmodel.kodeModelFlow.flow.collectAsStateWithLifecycle()
-//    val loadingError by viewmodel.loadingErrorFlow.flow.collectAsStateWithLifecycle()
-
-    CoursesScreen(coursesKey, modifier)
+    CoursesScreen(
+        coursesKey = coursesKey,
+        model = model,
+        modifier = modifier,
+        error = loadingError,
+    )
 }
 
 @Composable
 fun CoursesScreen(
     coursesKey: CoursesKey,
+    model: CoursesModel,
     modifier: Modifier = Modifier,
+    error: NetworkDatasource.LoadingError? = null,
 ) {
+    when (model) {
+        is CoursesModel.Loading -> {
+            println("Loading...")
+        }
+        is CoursesModel.Success -> {
+            println(model.courses.courses.size)
+        }
+    }
+    error?.let(::println)
+
     Column(modifier) {
         when (coursesKey.value) {
             is CoursesMainKey -> {
