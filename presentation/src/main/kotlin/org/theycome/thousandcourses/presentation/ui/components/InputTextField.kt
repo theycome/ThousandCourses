@@ -47,27 +47,22 @@ fun InputTextField(
         textStyle = MaterialTheme.typography.bodyMedium,
         onValueChange = {
             inputText = it
-            when {
-                validator != null -> {
-                    either {
-                        validator.transformAndThenValidate(it.text)
-                    }.onRight { result ->
-                        onInput(result)
-                        isValid = true
-                    }.onLeft {
-                        onInput(null)
-                        isValid = false
-                    }
-                }
-                else -> {
-                    onInput(it.text)
+            if (validator == null) {
+                onInput(it.text)
+                isValid = true
+            } else {
+                either {
+                    validator.transformAndThenValidate(it.text)
+                }.onRight { result ->
+                    onInput(result)
                     isValid = true
+                }.onLeft {
+                    onInput(null)
+                    isValid = false
                 }
             }
         },
-        placeholder = {
-            Text(stringResource(placeholderId))
-        },
+        placeholder = { Text(stringResource(placeholderId)) },
         shape = RoundedCornerShape(30.dp),
         colors =
             TextFieldDefaults.colors(
@@ -77,8 +72,7 @@ fun InputTextField(
                 unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
             ),
         maxLines = 1,
-        // standard error underline decoration contradicts figma design
-        isError = if (showError) !isValid else false,
+        isError = if (showError) !isValid else false, // standard error underline decoration contradicts figma design
         visualTransformation = visualTransformation,
     )
 }

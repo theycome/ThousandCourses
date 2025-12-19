@@ -35,12 +35,11 @@ class CoursesViewModel
             viewModelScope.launch(dispatcher) {
                 withTimeoutOrNull(10.seconds) {
                     recover({
+                        val courses = networkDatasource.loadCourses()
                         CoursesModel
-                            .Success(networkDatasource.loadCourses())
+                            .Success(courses)
                             .let(coursesFlow::update)
-                    }) {
-                        loadingCoursesErrorFlow.update(it)
-                    }
+                    }) { loadingCoursesErrorFlow.update(it) }
                 } ?: loadingCoursesErrorFlow.update(NetworkDatasource.LoadingError.TimedOut)
             }
         }
