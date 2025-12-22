@@ -1,15 +1,20 @@
-package org.theycome.thousandcourses.presentation.ui.navigation
+package org.theycome.thousandcourses.navigator
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import kotlinx.serialization.Serializable
 
 /**
- * Created by Ivan Yakushev on 12.11.2025
+ * Created by Ivan Yakushev on 20.12.2025
  */
 typealias EntryProviderInstaller = EntryProviderScope<NavKey>.() -> Unit
+
+@Serializable
+data object GreetingKey : NavKey
 
 @ActivityRetainedScoped
 class Navigator(
@@ -38,3 +43,10 @@ class Navigator(
                 "\n===\n",
         )
 }
+
+fun NavBackStack<NavKey>.log() =
+    println(
+        "=== back stack ===\n" +
+            map { it }.joinToString("\n") +
+            "\n===\n",
+    )

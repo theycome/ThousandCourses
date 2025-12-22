@@ -5,10 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import org.theycome.thousandcourses.navigator.EntryProviderInstaller
+import org.theycome.thousandcourses.navigator.GreetingKey
+import org.theycome.thousandcourses.navigator.Navigator
 import org.theycome.thousandcourses.presentation.ui.navigation.CoursesKey
-import org.theycome.thousandcourses.presentation.ui.navigation.EntryProviderInstaller
-import org.theycome.thousandcourses.presentation.ui.navigation.GreetingKey
-import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
 import org.theycome.thousandcourses.presentation.ui.navigation.mainCoursesKey
 import org.theycome.thousandcourses.presentation.ui.screens.CoursesScreenStateful
 import org.theycome.thousandcourses.presentation.ui.screens.GreetingScreen

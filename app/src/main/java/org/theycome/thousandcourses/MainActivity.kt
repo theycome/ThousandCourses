@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import dagger.hilt.android.AndroidEntryPoint
-import org.theycome.thousandcourses.presentation.ui.navigation.EntryProviderInstaller
-import org.theycome.thousandcourses.presentation.ui.navigation.Navigator
+import org.theycome.thousandcourses.navigator.EntryProviderInstaller
+import org.theycome.thousandcourses.navigator.Navigator
 import org.theycome.thousandcourses.presentation.ui.theme.ThousandCoursesTheme
 import org.theycome.thousandcourses.presentation.viewmodels.CoursesViewModel
 import javax.inject.Inject

@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 import org.theycome.thousandcourses.presentation.R
@@ -13,9 +12,6 @@ import org.theycome.thousandcourses.presentation.ui.screens.coursesKeyBottomNavC
 /**
  * Created by Ivan Yakushev on 25.10.2025
  */
-@Serializable
-data object GreetingKey : NavKey
-
 @Serializable
 sealed interface CoursesKeyValue {
     @get:StringRes val labelId: Int
@@ -66,10 +62,3 @@ enum class CoursesRoutes(
     Favorites(favoritesCoursesKey),
     Account(accountCoursesKey),
 }
-
-fun NavBackStack<NavKey>.log() =
-    println(
-        "=== back stack ===\n" +
-            map { it }.joinToString("\n") +
-            "\n===\n",
-    )
