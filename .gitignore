@@ -18,6 +18,8 @@
 /.kotlin/errors
 .DS_Store
 /build
+navigator/build
+navigator/.idea
 /captures
 .externalNativeBuild
 .cxx
