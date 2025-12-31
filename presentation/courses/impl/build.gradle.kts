@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.spotless)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
@@ -32,7 +33,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.theycome.thousandcourses.network.impl"
+    namespace = "org.theycome.thousandcourses.presentation.courses.impl"
     compileSdk {
         version = release(36)
     }
@@ -54,6 +55,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        compose = true
+    }
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
@@ -64,14 +68,24 @@ android {
 dependencies {
 
     // modules
+    implementation(projects.core)
+    implementation(projects.navigator)
     implementation(projects.network.api)
+    implementation(projects.presentation.core)
+    implementation(projects.presentation.courses.api)
+
+    // androidx core
+    implementation(libs.androidx.navigation3.ui)
+
+    // compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.hilt.navigation)
 
     // dagger hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-
-    // moshi
-    implementation(libs.moshi)
 
     // arrow
     implementation(libs.arrow.core)

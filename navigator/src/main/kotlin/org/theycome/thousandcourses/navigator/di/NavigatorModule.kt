@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.theycome.thousandcourses.navigator.GreetingKey
 import org.theycome.thousandcourses.navigator.Navigator
+import org.theycome.thousandcourses.presentation.greeting.api.GreetingKey
 import javax.inject.Singleton
 
 /**

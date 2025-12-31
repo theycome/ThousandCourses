@@ -6,15 +6,11 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import kotlinx.serialization.Serializable
 
 /**
  * Created by Ivan Yakushev on 20.12.2025
  */
 typealias EntryProviderInstaller = EntryProviderScope<NavKey>.() -> Unit
-
-@Serializable
-data object GreetingKey : NavKey
 
 @ActivityRetainedScoped
 class Navigator(

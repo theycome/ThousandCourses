@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.spotless)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 spotless {
@@ -67,6 +66,9 @@ android {
 }
 
 dependencies {
+
+    // modules
+    implementation(projects.presentation.greeting.api)
 
     // androidx core
     implementation(libs.androidx.navigation3.runtime)

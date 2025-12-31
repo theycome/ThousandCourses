@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.spotless)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.kotest)
 }
 
 spotless {
@@ -63,19 +62,10 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     // moshi
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-    implementation(libs.moshi.kotlin.codegen)
-    implementation(libs.moshi.adapters)
-    implementation(libs.retrofit.converter.moshi)
 
     // dagger hilt
     implementation(libs.hilt.android)
