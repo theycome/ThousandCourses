@@ -40,8 +40,8 @@ sealed interface CoursesKeyData {
         fun of(key: CoursesKey): CoursesKeyData =
             when (key) {
                 is CoursesKey.Main -> Main
-                is CoursesKey.Account -> Main
-                is CoursesKey.Favorites -> Main
+                is CoursesKey.Account -> Account
+                is CoursesKey.Favorites -> Favorites
             }
     }
 }
