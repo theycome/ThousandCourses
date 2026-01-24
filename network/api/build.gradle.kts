@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.spotless)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
