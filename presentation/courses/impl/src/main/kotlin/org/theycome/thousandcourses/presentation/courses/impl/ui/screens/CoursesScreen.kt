@@ -72,17 +72,7 @@ fun CoursesScreen(
     error?.let(::println)
 
     Column(modifier) {
-        when (keyData) {
-            is CoursesKeyData.Main -> {
-                CoursesMainScreen(modifier)
-            }
-            is CoursesKeyData.Favorites -> {
-                CoursesFavoritesScreen(modifier)
-            }
-            is CoursesKeyData.Account -> {
-                CoursesAccountScreen(modifier)
-            }
-        }
+        keyData.mainContent(modifier)
         NavigationBar(modifier)
     }
 }
@@ -112,7 +102,7 @@ fun NavigationBar(modifier: Modifier = Modifier) {
 
         CoursesRoutes.entries.forEach { route ->
             with(route.key) {
-                content(entryModifier)
+                bottomBarContent(entryModifier)
             }
         }
     }
