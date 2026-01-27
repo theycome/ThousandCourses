@@ -10,6 +10,8 @@ object ThemeColors {
     val LightGray = Color(0xFF32333A)
     val White = Color(0xFFF2F2F3)
     val Green = Color(0xFF12B956)
+    val SurfaceVariant = Color(0xFF24252A)
+    val OnSurfaceVariant = Color(0xFF32333A)
     val OnSurface = Color(0xFF929296)
     val Stroke = Color(0xFF4D555E)
 
@@ -42,8 +44,8 @@ private val DarkColorScheme =
 //        onBackground = ,
 //        surface = ,
         onSurface = ThemeColors.OnSurface,
-//        surfaceVariant = ,
-//        onSurfaceVariant = ,
+        surfaceVariant = ThemeColors.SurfaceVariant,
+        onSurfaceVariant = ThemeColors.OnSurfaceVariant,
 //        surfaceTint = ,
 //        inverseSurface = ,
 //        inverseOnSurface = ,

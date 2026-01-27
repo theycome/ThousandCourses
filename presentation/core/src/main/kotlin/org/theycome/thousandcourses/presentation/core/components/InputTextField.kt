@@ -62,14 +62,19 @@ fun InputTextField(
                 }
             }
         },
-        placeholder = { Text(stringResource(placeholderId)) },
+        placeholder = {
+            Text(
+                text = stringResource(placeholderId),
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
         shape = RoundedCornerShape(30.dp),
         colors =
             TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
             ),
         maxLines = 1,
         isError = if (showError) !isValid else false, // standard error underline decoration contradicts figma design
@@ -79,7 +84,19 @@ fun InputTextField(
 
 @Composable
 @Preview
-fun InputTextFieldPreview() {
+fun InputTextFieldPreviewWithValue() {
+    ThousandCoursesTheme {
+        InputTextField(
+            value = "bla",
+            placeholderId = R.string.enter_caption,
+            onInput = {},
+        )
+    }
+}
+
+@Composable
+@Preview
+fun InputTextFieldPreviewNoValue() {
     ThousandCoursesTheme {
         InputTextField(
             value = "",
