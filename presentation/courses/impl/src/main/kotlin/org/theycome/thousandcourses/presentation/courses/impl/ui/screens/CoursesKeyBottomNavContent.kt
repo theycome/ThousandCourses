@@ -19,27 +19,43 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.presentation.core.theme.ThousandCoursesTheme
 import org.theycome.thousandcourses.presentation.courses.impl.CoursesKeyData
-import org.theycome.thousandcourses.presentation.courses.impl.CoursesRoutes
+import org.theycome.thousandcourses.presentation.courses.impl.CoursesRoute
 
 /**
  * Created by Ivan Yakushev on 22.11.2025
  */
 @Preview
 @Composable
-fun CoursesKeyBottomNavContentPreview() {
+fun CoursesKeyBottomNavContentPreviewSelected() {
     ThousandCoursesTheme {
         with(
-            CoursesRoutes.entries
+            CoursesRoute
+                .routesOf(CoursesKeyData.Main)
                 .first()
-                .key,
+                .keyData,
         ) {
-            coursesKeyBottomNavContent(Modifier)
+            coursesKeyBottomNavContent(true, Modifier)
         }
     }
 }
 
-val coursesKeyBottomNavContent: @Composable CoursesKeyData.(Modifier) -> Unit =
-    { modifier ->
+@Preview
+@Composable
+fun CoursesKeyBottomNavContentPreviewUnselected() {
+    ThousandCoursesTheme {
+        with(
+            CoursesRoute
+                .routesOf(CoursesKeyData.Main)
+                .first()
+                .keyData,
+        ) {
+            coursesKeyBottomNavContent(false, Modifier)
+        }
+    }
+}
+
+val coursesKeyBottomNavContent: @Composable CoursesKeyData.(selected: Boolean, Modifier) -> Unit =
+    { selected: Boolean, modifier: Modifier ->
         Column(
             modifier =
                 modifier
@@ -54,16 +70,17 @@ val coursesKeyBottomNavContent: @Composable CoursesKeyData.(Modifier) -> Unit =
                         .height(32.dp)
                         .background(MaterialTheme.colorScheme.surfaceVariant),
             ) {
-
-                Box(
-                    modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .background(
-                                MaterialTheme.colorScheme.onSurfaceVariant,
-                                shape = MaterialTheme.shapes.medium,
-                            ),
-                )
+                if (selected) {
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .background(
+                                    MaterialTheme.colorScheme.onSurfaceVariant,
+                                    shape = MaterialTheme.shapes.medium,
+                                ),
+                    )
+                }
                 Box(
                     modifier =
                         Modifier
@@ -72,7 +89,7 @@ val coursesKeyBottomNavContent: @Composable CoursesKeyData.(Modifier) -> Unit =
                     Icon(
                         painter = painterResource(imageVectorId),
                         contentDescription = stringResource(labelId),
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary,
                     )
                 }
             }
@@ -83,7 +100,7 @@ val coursesKeyBottomNavContent: @Composable CoursesKeyData.(Modifier) -> Unit =
             ) {
                 Text(
                     text = stringResource(labelId),
-                    color = MaterialTheme.colorScheme.primary,
+                    color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.titleMedium,
                 )
             }

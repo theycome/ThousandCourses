@@ -20,7 +20,7 @@ import org.theycome.thousandcourses.presentation.core.theme.ThousandCoursesTheme
 import org.theycome.thousandcourses.presentation.courses.api.CoursesKey
 import org.theycome.thousandcourses.presentation.courses.api.models.CoursesModel
 import org.theycome.thousandcourses.presentation.courses.impl.CoursesKeyData
-import org.theycome.thousandcourses.presentation.courses.impl.CoursesRoutes
+import org.theycome.thousandcourses.presentation.courses.impl.CoursesRoute
 import org.theycome.thousandcourses.presentation.courses.impl.viewmodels.CoursesViewModel
 
 /**
@@ -73,7 +73,7 @@ fun CoursesScreen(
 
     Column(modifier) {
         keyData.mainContent(modifier)
-        NavigationBar(modifier)
+        NavigationBar(keyData, modifier)
     }
 }
 
@@ -81,12 +81,16 @@ fun CoursesScreen(
 @Composable
 fun NavigationBarPreview() {
     ThousandCoursesTheme {
-        NavigationBar()
+        NavigationBar(CoursesKeyData.Main)
     }
 }
 
 @Composable
-fun NavigationBar(modifier: Modifier = Modifier) {
+fun NavigationBar(
+    keyData: CoursesKeyData,
+    modifier: Modifier = Modifier,
+) {
+    val routes = CoursesRoute.routesOf(keyData)
     Row(
         modifier =
             modifier
@@ -97,12 +101,12 @@ fun NavigationBar(modifier: Modifier = Modifier) {
     ) {
         val entryModifier =
             Modifier
-                .weight(1.0f / CoursesRoutes.entries.size)
+                .weight(1.0f / routes.size)
                 .fillMaxHeight()
 
-        CoursesRoutes.entries.forEach { route ->
-            with(route.key) {
-                bottomBarContent(entryModifier)
+        routes.forEach { route ->
+            with(route.keyData) {
+                bottomBarContent(route.selected, entryModifier)
             }
         }
     }

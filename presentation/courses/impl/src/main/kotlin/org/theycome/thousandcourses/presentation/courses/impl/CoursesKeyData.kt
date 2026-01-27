@@ -16,7 +16,7 @@ sealed interface CoursesKeyData {
     val labelId: Int
     val imageVectorId: Int
     val mainContent: @Composable (Modifier) -> Unit
-    val bottomBarContent: @Composable CoursesKeyData.(Modifier) -> Unit
+    val bottomBarContent: @Composable CoursesKeyData.(selected: Boolean, Modifier) -> Unit
         get() = coursesKeyBottomNavContent
 
     data object Main : CoursesKeyData {
@@ -65,10 +65,21 @@ sealed interface CoursesKeyData {
     }
 }
 
-enum class CoursesRoutes(
-    val key: CoursesKeyData,
+data class CoursesRoute(
+    val keyData: CoursesKeyData,
+    val selected: Boolean,
 ) {
-    Main(CoursesKeyData.Main),
-    Favorites(CoursesKeyData.Favorites),
-    Account(CoursesKeyData.Account),
+    companion object {
+        fun routesOf(keyData: CoursesKeyData): List<CoursesRoute> =
+            routes
+                .map {
+                    CoursesRoute(
+                        keyData = it,
+                        selected = it == keyData,
+                    )
+                }
+
+        private val routes =
+            listOf(CoursesKeyData.Main, CoursesKeyData.Favorites, CoursesKeyData.Account)
+    }
 }
