@@ -47,7 +47,7 @@ fun CoursesScreenStateful(
         .collectAsStateWithLifecycle()
 
     CoursesScreen(
-        keyData = CoursesKeyData.of(key), // dispatch between courses.api and courses.impl
+        keyData = CoursesKeyData.of(key),
         model = model,
         modifier = modifier,
         error = loadingError,

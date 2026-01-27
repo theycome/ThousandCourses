@@ -37,6 +37,9 @@ sealed interface CoursesKeyData {
     }
 
     companion object {
+        /**
+         * A conversion from key abstraction in courses.api to courses.impl
+         */
         fun of(key: CoursesKey): CoursesKeyData =
             when (key) {
                 is CoursesKey.Main -> Main
