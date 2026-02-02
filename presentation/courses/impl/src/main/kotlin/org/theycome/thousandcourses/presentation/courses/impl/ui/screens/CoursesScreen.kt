@@ -32,13 +32,15 @@ fun CoursesScreenPreview() =
     ThousandCoursesTheme {
         CoursesScreen(
             keyData = CoursesKeyData.Main,
+            routes = CoursesRoute.routesOf(CoursesKey.Main, null),
             model = CoursesModel.default(),
         )
     }
 
 @Composable
 fun CoursesScreenStateful(
-    key: CoursesKey,
+    keyData: CoursesKeyData,
+    routes: List<CoursesRoute>,
     modifier: Modifier = Modifier,
     viewModel: CoursesViewModel = hiltViewModel(),
 ) {
@@ -47,7 +49,8 @@ fun CoursesScreenStateful(
         .collectAsStateWithLifecycle()
 
     CoursesScreen(
-        keyData = CoursesKeyData.of(key),
+        keyData = keyData,
+        routes = routes,
         model = model,
         modifier = modifier,
         error = loadingError,
@@ -57,6 +60,7 @@ fun CoursesScreenStateful(
 @Composable
 fun CoursesScreen(
     keyData: CoursesKeyData,
+    routes: List<CoursesRoute>,
     model: CoursesModel,
     modifier: Modifier = Modifier,
     error: NetworkDatasource.LoadingError? = null,
@@ -73,7 +77,11 @@ fun CoursesScreen(
 
     Column(modifier) {
         keyData.mainContent(modifier)
-        NavigationBar(keyData, modifier)
+        NavigationBar(
+            keyData = keyData,
+            routes = routes,
+            modifier = modifier,
+        )
     }
 }
 
@@ -81,16 +89,19 @@ fun CoursesScreen(
 @Composable
 fun NavigationBarPreview() {
     ThousandCoursesTheme {
-        NavigationBar(CoursesKeyData.Main)
+        NavigationBar(
+            CoursesKeyData.Main,
+            CoursesRoute.routesOf(CoursesKey.Main, null),
+        )
     }
 }
 
 @Composable
 fun NavigationBar(
     keyData: CoursesKeyData,
+    routes: List<CoursesRoute>,
     modifier: Modifier = Modifier,
 ) {
-    val routes = CoursesRoute.routesOf(keyData)
     Row(
         modifier =
             modifier
@@ -106,7 +117,7 @@ fun NavigationBar(
 
         routes.forEach { route ->
             with(route.keyData) {
-                bottomBarContent(route.selected, entryModifier)
+                bottomBarContent(route.selected, route.action, entryModifier)
             }
         }
     }

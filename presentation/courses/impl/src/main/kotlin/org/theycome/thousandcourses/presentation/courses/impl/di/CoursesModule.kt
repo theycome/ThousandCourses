@@ -9,6 +9,11 @@ import dagger.multibindings.IntoSet
 import org.theycome.thousandcourses.navigator.EntryProviderInstaller
 import org.theycome.thousandcourses.navigator.Navigator
 import org.theycome.thousandcourses.presentation.courses.api.CoursesKey
+import org.theycome.thousandcourses.presentation.courses.api.CoursesKey.Account
+import org.theycome.thousandcourses.presentation.courses.api.CoursesKey.Favorites
+import org.theycome.thousandcourses.presentation.courses.api.CoursesKey.Main
+import org.theycome.thousandcourses.presentation.courses.impl.CoursesKeyData
+import org.theycome.thousandcourses.presentation.courses.impl.CoursesRoute
 import org.theycome.thousandcourses.presentation.courses.impl.ui.screens.CoursesScreenStateful
 import javax.inject.Singleton
 
@@ -23,16 +28,23 @@ object CoursesModule {
     @Singleton
     fun provideEntryProviderInstaller(navigator: Navigator): EntryProviderInstaller =
         {
-            val block: @Composable (CoursesKey) -> Unit = { key ->
-                CoursesScreenStateful(key)
+            val block: @Composable (CoursesKey) -> Unit = { selectedKey ->
+                /**
+                 * Convert from api.CoursesKey to impl.CoursesKeyData
+                 */
+                CoursesScreenStateful(
+                    keyData = CoursesKeyData.of(selectedKey),
+                    routes = CoursesRoute.routesOf(selectedKey, navigator),
+                )
             }
-            entry<CoursesKey.Main> { key ->
+
+            entry<Main> { key ->
                 block(key)
             }
-            entry<CoursesKey.Account> { key ->
+            entry<Account> { key ->
                 block(key)
             }
-            entry<CoursesKey.Favorites> { key ->
+            entry<Favorites> { key ->
                 block(key)
             }
         }

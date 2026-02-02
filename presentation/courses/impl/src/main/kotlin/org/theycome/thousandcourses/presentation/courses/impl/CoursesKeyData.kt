@@ -2,8 +2,12 @@ package org.theycome.thousandcourses.presentation.courses.impl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import org.theycome.thousandcourses.navigator.Navigator
 import org.theycome.thousandcourses.presentation.core.R
 import org.theycome.thousandcourses.presentation.courses.api.CoursesKey
+import org.theycome.thousandcourses.presentation.courses.api.CoursesKey.Account
+import org.theycome.thousandcourses.presentation.courses.api.CoursesKey.Favorites
+import org.theycome.thousandcourses.presentation.courses.api.CoursesKey.Main
 import org.theycome.thousandcourses.presentation.courses.impl.ui.screens.CoursesAccountScreen
 import org.theycome.thousandcourses.presentation.courses.impl.ui.screens.CoursesFavoritesScreen
 import org.theycome.thousandcourses.presentation.courses.impl.ui.screens.CoursesMainScreen
@@ -16,7 +20,7 @@ sealed interface CoursesKeyData {
     val labelId: Int
     val imageVectorId: Int
     val mainContent: @Composable (Modifier) -> Unit
-    val bottomBarContent: @Composable CoursesKeyData.(selected: Boolean, Modifier) -> Unit
+    val bottomBarContent: @Composable CoursesKeyData.(selected: Boolean, action: () -> Unit, Modifier) -> Unit
         get() = coursesKeyBottomNavContent
 
     data object Main : CoursesKeyData {
@@ -54,7 +58,7 @@ sealed interface CoursesKeyData {
 
     companion object {
         /**
-         * A conversion from key abstraction in courses.api to courses.impl
+         * A conversion from key abstraction in courses:api to courses:impl
          */
         fun of(key: CoursesKey): CoursesKeyData =
             when (key) {
@@ -68,18 +72,36 @@ sealed interface CoursesKeyData {
 data class CoursesRoute(
     val keyData: CoursesKeyData,
     val selected: Boolean,
+    val action: () -> Unit,
 ) {
     companion object {
-        fun routesOf(keyData: CoursesKeyData): List<CoursesRoute> =
-            routes
-                .map {
-                    CoursesRoute(
-                        keyData = it,
-                        selected = it == keyData,
-                    )
-                }
+        fun routesOf(
+            selectedKey: CoursesKey,
+            navigator: Navigator?,
+        ): List<CoursesRoute> =
+            emptyActions.map { (key, emptyAction) ->
+                val selected = selectedKey == key
+                val action =
+                    navigator?.let {
+                        if (selected) {
+                            emptyAction
+                        } else {
+                            { navigator.goTo(key) }
+                        }
+                    } ?: emptyAction
 
-        private val routes =
-            listOf(CoursesKeyData.Main, CoursesKeyData.Favorites, CoursesKeyData.Account)
+                CoursesRoute(
+                    keyData = CoursesKeyData.of(key),
+                    selected = selected,
+                    action = action,
+                )
+            }
+
+        private val emptyActions: Map<CoursesKey, () -> Unit> =
+            listOf(
+                Main,
+                Account,
+                Favorites,
+            ).associateWith { { } }
     }
 }

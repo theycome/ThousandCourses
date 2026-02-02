@@ -1,6 +1,7 @@
 package org.theycome.thousandcourses.presentation.courses.impl.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.theycome.thousandcourses.presentation.core.theme.ThousandCoursesTheme
+import org.theycome.thousandcourses.presentation.courses.api.CoursesKey
 import org.theycome.thousandcourses.presentation.courses.impl.CoursesKeyData
 import org.theycome.thousandcourses.presentation.courses.impl.CoursesRoute
 
@@ -30,11 +32,11 @@ fun CoursesKeyBottomNavContentPreviewSelected() {
     ThousandCoursesTheme {
         with(
             CoursesRoute
-                .routesOf(CoursesKeyData.Main)
+                .routesOf(selectedKey = CoursesKey.Main, navigator = null)
                 .first()
                 .keyData,
         ) {
-            coursesKeyBottomNavContent(true, Modifier)
+            coursesKeyBottomNavContent(true, {}, Modifier)
         }
     }
 }
@@ -45,17 +47,17 @@ fun CoursesKeyBottomNavContentPreviewUnselected() {
     ThousandCoursesTheme {
         with(
             CoursesRoute
-                .routesOf(CoursesKeyData.Main)
+                .routesOf(selectedKey = CoursesKey.Main, navigator = null)
                 .first()
                 .keyData,
         ) {
-            coursesKeyBottomNavContent(false, Modifier)
+            coursesKeyBottomNavContent(false, {}, Modifier)
         }
     }
 }
 
-val coursesKeyBottomNavContent: @Composable CoursesKeyData.(selected: Boolean, Modifier) -> Unit =
-    { selected: Boolean, modifier: Modifier ->
+val coursesKeyBottomNavContent: @Composable CoursesKeyData.(selected: Boolean, action: () -> Unit, Modifier) -> Unit =
+    { selected: Boolean, action: () -> Unit, modifier: Modifier ->
         Column(
             modifier =
                 modifier
@@ -68,6 +70,7 @@ val coursesKeyBottomNavContent: @Composable CoursesKeyData.(selected: Boolean, M
                     Modifier
                         .width(64.dp)
                         .height(32.dp)
+                        .clickable { action.invoke() }
                         .background(MaterialTheme.colorScheme.surfaceVariant),
             ) {
                 if (selected) {
