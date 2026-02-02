@@ -1,56 +1,29 @@
 [versions]
 agp = "9.0.0"
 kotlin = "2.3.0"
-coreKtx = "1.17.0"
 ksp = "2.3.4"
 
-activityCompose = "1.12.0"
 navigation3 = "1.0.0"
 composeBom = "2026.01.00"
 androidxHiltNavigation = "1.3.0"
 
-junit = "4.13.2"
-junitVersion = "1.3.0"
-espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.10.0"
 spotless = "7.2.1"
 moshi = "1.15.2"
 daggerHilt = "2.59"
-retrofit = "3.0.0"
-okhttpBom = "5.1.0"
 arrow = "2.1.2"
-chucker = "4.2.0"
 kotlintest = "2.0.0"
 kotest = "6.0.4"
-appcompat = "1.6.1"
-material = "1.10.0"
 kotlinSerialization = "2.1.21"
 
 [libraries]
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-
-# androidx
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-
 # Navigation 3
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
-material3-adaptive-navigation = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite" }
 androidx-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigation" }
 
 # compose
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 # hilt
@@ -59,31 +32,14 @@ hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-comp
 
 # moshi
 moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
-moshi-adapters = { group = "com.squareup.moshi", name = "moshi-adapters", version.ref = "moshi" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
-moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
-
-# retrofit
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
-
-# okhttp
-okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttpBom" }
-okhttp-core = { group = "com.squareup.okhttp3", name = "okhttp" }
-okhttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
 
 # arrow
 arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
-arrow-coroutines = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow" }
-
-chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
 
 # kotest
 kotlintest = { group = "io.kotlintest", name = "kotlintest" , version.ref = "kotlintest"}
 kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5" , version.ref = "kotest"}
-kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core" , version.ref = "kotest"}
-kotest-property = { group = "io.kotest", name = "kotest-property" , version.ref = "kotest"}
-kotest-framework-engine = { group = "io.kotest", name = "kotest-framework-engine" , version.ref = "kotest"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
