@@ -20,3 +20,5 @@
 * Spotless
 * Arrow
 * kotest
+
+![GreetingScreen](images/GreetingScreen.png)
