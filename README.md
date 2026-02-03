@@ -21,4 +21,5 @@
 * Arrow
 * kotest
 
+## Greeting screen
 ![GreetingScreen](images/GreetingScreen.png)
