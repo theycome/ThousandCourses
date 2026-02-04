@@ -17,7 +17,7 @@ class NotEmptyTextValidator :
             Mapping(),
         )
 
-    override fun transform(input: String): String = input
+    override fun prune(input: String): String = input
 
     override fun validate(input: String): Boolean = input.isNotEmpty()
 

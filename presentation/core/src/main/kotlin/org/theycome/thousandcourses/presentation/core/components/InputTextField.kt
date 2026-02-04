@@ -52,7 +52,7 @@ fun InputTextField(
                 isValid = true
             } else {
                 either {
-                    validator.transformAndThenValidate(it.text)
+                    validator.pruneAndThenValidate(it.text)
                 }.onRight { result ->
                     onInput(result)
                     isValid = true

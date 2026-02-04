@@ -23,19 +23,19 @@ class EmailValidator :
 
     override fun filter(text: AnnotatedString): TransformedText =
         text.text.let {
-            val transformed = transform(it)
+            val transformed = prune(it)
             TransformedText(
                 AnnotatedString(transformed),
                 Mapping(it),
             )
         }
 
-    override fun transform(input: String): String =
+    override fun prune(input: String): String =
         input.filter {
             it.isAllowed
         }
 
-    override fun validate(input: String): Boolean = regex.matches(transform(input))
+    override fun validate(input: String): Boolean = regex.matches(prune(input))
 
     private inner class Mapping(
         val original: String,
@@ -49,7 +49,7 @@ class EmailValidator :
         }
 
         override fun transformedToOriginal(offset: Int): Int {
-            val transformed = transform(original)
+            val transformed = prune(original)
             var skipCount = 0
             var i = 0
             var j = 0

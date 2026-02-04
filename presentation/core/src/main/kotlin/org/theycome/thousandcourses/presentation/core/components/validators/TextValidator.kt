@@ -9,7 +9,10 @@ import arrow.core.raise.ensure
 interface TextValidator {
     data object Error
 
-    fun transform(input: String): String
+    /**
+     * remove not allowable symbols
+     */
+    fun prune(input: String): String
 
     fun validate(input: String): Boolean
 
@@ -17,8 +20,8 @@ interface TextValidator {
      * Use Strategy pattern
      */
     context(raise: Raise<Error>)
-    fun transformAndThenValidate(input: String): String {
-        val transformed = transform(input)
+    fun pruneAndThenValidate(input: String): String {
+        val transformed = prune(input)
         raise.ensure(validate(transformed)) {
             Error
         }
